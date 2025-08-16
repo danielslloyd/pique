@@ -17,6 +17,13 @@ class KeyboardHandler {
             return;
         }
         
+        // Ctrl+W or Cmd+W to skip to next word (only in player mode)
+        if ((event.ctrlKey || event.metaKey) && event.key === 'w' && this.app.currentMode === 'player') {
+            event.preventDefault();
+            this.app.skipToNextWord();
+            return;
+        }
+        
         // Escape key to return to library from player
         if (event.key === 'Escape' && this.app.currentMode === 'player') {
             this.app.returnToLibrary();

@@ -3,6 +3,7 @@ class SpeechEngine {
     constructor() {
         this.recognition = null;
         this.wordPile = [];
+        this.lastMatchedIndex = -1; // Track position in pile for next word matching
         this.consecutiveNoMatch = 0;
         this.maxConsecutiveNoMatch = 3;
         this.app = null;
@@ -19,6 +20,7 @@ class SpeechEngine {
         
         this.createDebugOverlay();
         this.wordPile = [];
+        this.lastMatchedIndex = -1;
         
         if (this.recognition) {
             this.recognition.stop();
@@ -60,33 +62,44 @@ class SpeechEngine {
             
             spokenWords.forEach(word => {
                 if (word.trim()) {
-                    this.wordPile.push({ word: word.trim(), confidence });
+                    this.wordPile.push({ 
+                        word: word.trim(), 
+                        confidence,
+                        matched: false // Track if this word has been matched
+                    });
                 }
             });
         }
         
-        console.log('Word pile:', this.wordPile.map(w => `"${w.word}"`).join(', '));
+        console.log('Word pile:', this.wordPile.map((w, i) => `${i}: "${w.word}"${w.matched ? ' ✓' : ''}`).join(', '));
     }
     
     processWordPile(expectedWords) {
         let foundMatches = 0;
         
-        while (this.app.currentWordIndex < expectedWords.length && this.wordPile.length > 0) {
+        while (this.app.currentWordIndex < expectedWords.length) {
             const expectedWord = expectedWords[this.app.currentWordIndex];
             let matchFound = false;
             
-            console.log(`Looking for: "${expectedWord}" in pile of ${this.wordPile.length} words`);
+            console.log(`Looking for: "${expectedWord}" starting from pile index ${this.lastMatchedIndex + 1}`);
             
-            for (let i = 0; i < this.wordPile.length; i++) {
+            // Only search from the position after the last matched word
+            for (let i = this.lastMatchedIndex + 1; i < this.wordPile.length; i++) {
                 const pileWord = this.wordPile[i];
+                
+                // Skip already matched words
+                if (pileWord.matched) continue;
+                
                 const similarity = WordMatcher.calculateSimilarity(pileWord.word, expectedWord);
                 
-                console.log(`  "${pileWord.word}" vs "${expectedWord}" = ${similarity.toFixed(2)}`);
+                console.log(`  [${i}] "${pileWord.word}" vs "${expectedWord}" = ${similarity.toFixed(2)}`);
                 
                 if (similarity >= 0.8) {
-                    console.log(`  ✓ MATCH! Removing "${pileWord.word}" and ${i} words before it`);
+                    console.log(`  ✓ MATCH! Marking pile word at index ${i} as matched`);
                     
-                    this.wordPile.splice(0, i + 1);
+                    // Mark this word as matched and update the last matched index
+                    pileWord.matched = true;
+                    this.lastMatchedIndex = i;
                     foundMatches++;
                     matchFound = true;
                     this.consecutiveNoMatch = 0;
@@ -121,11 +134,15 @@ class SpeechEngine {
     }
     
     cleanupWordPile() {
-        if (this.wordPile.length > 15) {
-            this.wordPile.splice(0, this.wordPile.length - 15);
+        // Only remove old words if pile gets too large, but keep matched status
+        if (this.wordPile.length > 25) {
+            const wordsToRemove = this.wordPile.length - 25;
+            this.wordPile.splice(0, wordsToRemove);
+            // Adjust the last matched index
+            this.lastMatchedIndex = Math.max(-1, this.lastMatchedIndex - wordsToRemove);
         }
         
-        console.log(`After processing: currentWordIndex=${this.app.currentWordIndex}, pile size=${this.wordPile.length}`);
+        console.log(`After processing: currentWordIndex=${this.app.currentWordIndex}, pile size=${this.wordPile.length}, lastMatchedIndex=${this.lastMatchedIndex}`);
     }
     
     handleSpeechError(event) {
@@ -159,6 +176,7 @@ class SpeechEngine {
     
     reset() {
         this.wordPile = [];
+        this.lastMatchedIndex = -1;
         this.consecutiveNoMatch = 0;
     }
     
@@ -210,8 +228,16 @@ class SpeechEngine {
             html += '<div style="margin-bottom: 8px; color: #4CAF50;">Live Transcript:</div>';
             html += `<div style="margin-bottom: 15px; padding: 5px; background: rgba(255,255,255,0.1); border-radius: 3px;">"${latestResult[0].transcript}"</div>`;
             
-            html += '<div style="margin-bottom: 8px; color: #ff9800;">Word Pile:</div>';
-            html += `<div style="margin-bottom: 15px; padding: 5px; background: rgba(255,255,255,0.1); border-radius: 3px;">[${this.wordPile.map(w => `"${w.word}"`).join(', ')}]</div>`;
+            html += '<div style="margin-bottom: 8px; color: #ff9800;">Word Pile (Full History):</div>';
+            const pileDisplay = this.wordPile.map((w, i) => {
+                const isMatched = w.matched;
+                const isLastMatched = i === this.lastMatchedIndex;
+                const style = isMatched ? 
+                    (isLastMatched ? 'color: #4CAF50; font-weight: bold; background: rgba(76,175,80,0.3);' : 'color: #4CAF50;') : 
+                    'color: #ccc;';
+                return `<span style="${style}">[${i}] "${w.word}"${isMatched ? ' ✓' : ''}</span>`;
+            }).join(' ');
+            html += `<div style="margin-bottom: 15px; padding: 5px; background: rgba(255,255,255,0.1); border-radius: 3px; word-break: break-all; line-height: 1.4;">${pileDisplay}</div>`;
             
             html += '<div style="margin-bottom: 8px; color: #ff9800;">Alternative Hypotheses:</div>';
             
@@ -244,6 +270,8 @@ class SpeechEngine {
                 
                 html += '<div style="margin-top: 15px; margin-bottom: 8px; color: #2196F3;">Word Analysis:</div>';
                 html += `<div style="margin-bottom: 8px;">Looking for: <strong>"${expectedWord}"</strong> (${this.app.currentWordIndex + 1}/${expectedWords.length})</div>`;
+                html += `<div style="margin-bottom: 8px;">Last matched at pile index: <strong>${this.lastMatchedIndex}</strong></div>`;
+                html += `<div style="margin-bottom: 8px;">Searching from index: <strong>${this.lastMatchedIndex + 1}</strong></div>`;
             }
         } else {
             html += '<div style="color: #666;">No speech detected</div>';

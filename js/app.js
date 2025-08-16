@@ -269,6 +269,31 @@ class ReadingApp {
             this.ui.playSuccessSound();
         }
     }
+    
+    skipToNextWord() {
+        if (this.currentMode === 'player' && this.bookData?.pages[this.currentPageIndex]) {
+            const expectedWords = this.bookData.pages[this.currentPageIndex].text.trim().split(' ');
+            if (this.currentWordIndex < expectedWords.length) {
+                this.currentWordIndex++;
+                this.ui.updateTextHighlight(
+                    this.bookData.pages[this.currentPageIndex].text, 
+                    this.currentWordIndex
+                );
+                this.ui.showFeedback('⏭️ Skipped word!', 'info');
+                
+                // Check if page is complete after skipping
+                if (this.currentWordIndex >= expectedWords.length) {
+                    this.ui.showPageComplete();
+                    if (!this.hasPlayedSuccessSound) {
+                        this.ui.showFeedback('🎉 Page complete! Picture unlocked!', 'success');
+                        this.ui.playSuccessSound();
+                        this.hasPlayedSuccessSound = true;
+                        this.speechEngine.stop();
+                    }
+                }
+            }
+        }
+    }
 }
 
 // Initialize the app
