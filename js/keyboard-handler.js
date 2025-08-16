@@ -17,8 +17,8 @@ class KeyboardHandler {
             return;
         }
         
-        // Ctrl+W or Cmd+W to skip to next word (only in player mode)
-        if ((event.ctrlKey || event.metaKey) && event.key === 'w' && this.app.currentMode === 'player') {
+        // Ctrl+S or Cmd+S to skip to next word (only in player mode)
+        if ((event.ctrlKey || event.metaKey) && event.key === 's' && this.app.currentMode === 'player') {
             event.preventDefault();
             this.app.skipToNextWord();
             return;
