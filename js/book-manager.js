@@ -1,8 +1,9 @@
-// Book Management and File Handling
+// Book Management and File Handling - Fixed Version
 class BookManager {
     constructor() {
         this.availableBooks = [];
         this.loadedBooks = new Map(); // Cache for loaded .rbook files
+        this.activeBlobUrls = new Set(); // Track active blob URLs
     }
     
     async createThumbnailWithWhiteBackground(imageBlob) {
@@ -12,25 +13,21 @@ class BookManager {
             const img = new Image();
             
             img.onload = () => {
-                // Set canvas size to be square (use the smaller dimension for crop)
                 const size = Math.min(img.width, img.height);
                 canvas.width = size;
                 canvas.height = size;
                 
-                // Fill with white background first
                 ctx.fillStyle = 'white';
                 ctx.fillRect(0, 0, size, size);
                 
-                // Calculate positioning to center and crop the image
                 const sourceX = (img.width - size) / 2;
                 const sourceY = (img.height - size) / 2;
                 
-                // Draw the cropped image to fill the entire canvas
                 ctx.drawImage(img, sourceX, sourceY, size, size, 0, 0, size, size);
                 
-                // Convert to blob and create URL
                 canvas.toBlob((blob) => {
                     const url = URL.createObjectURL(blob);
+                    this.activeBlobUrls.add(url);
                     resolve(url);
                 }, 'image/jpeg', 0.9);
             };
@@ -86,7 +83,6 @@ class BookManager {
             console.warn('No book manifest found');
         }
         
-        // Fallback: try known book files
         const knownBooks = ['sample-book.rbook', 'adventure-tales.rbook', 'animal-friends.rbook'];
         const availableBooks = [];
         
@@ -131,13 +127,25 @@ class BookManager {
     }
     
     async loadBook(filename) {
+        console.log('Loading book:', filename);
+        
         if (filename.endsWith('.rbook')) {
             const rbookData = await this.loadRBookFile(filename);
-            return {
+            
+            // Create a clean book data structure for the player
+            const bookData = {
                 title: rbookData.metadata.title,
                 author: rbookData.metadata.author,
-                pages: rbookData.pages
+                pages: rbookData.pages.map(page => ({
+                    text: page.text,
+                    image: page.image // This should be the blob URL
+                }))
             };
+            
+            console.log('Processed book data for player:', bookData);
+            console.log('First page image URL:', bookData.pages?.[0]?.image);
+            
+            return bookData;
         } else {
             // Legacy JSON format
             const res = await fetch(`./books/${filename}`);
@@ -147,7 +155,10 @@ class BookManager {
     }
     
     async loadRBookFile(filename) {
+        console.log('Loading .rbook file:', filename);
+        
         if (this.loadedBooks.has(filename)) {
+            console.log('Returning cached book data for:', filename);
             return this.loadedBooks.get(filename);
         }
         
@@ -165,25 +176,28 @@ class BookManager {
             const bookJsonText = await bookJsonFile.async('text');
             const bookData = JSON.parse(bookJsonText);
             
-            // Extract thumbnail or use first image as fallback
+            console.log('Parsed book metadata:', bookData.metadata);
+            console.log('Number of pages:', bookData.pages?.length);
+            
+            // Extract thumbnail
             const thumbnailFile = zip.file('thumbnail.jpg') || zip.file('thumbnail.png');
             let thumbnailUrl = null;
             
             if (thumbnailFile) {
                 const thumbnailBlob = await thumbnailFile.async('blob');
                 thumbnailUrl = URL.createObjectURL(thumbnailBlob);
+                this.activeBlobUrls.add(thumbnailUrl);
             } else if (bookData.pages && bookData.pages.length > 0) {
-                // Use first page image as thumbnail with proper PNG handling
                 const firstImageName = bookData.pages[0].image;
                 const firstImageFile = zip.file(firstImageName);
                 if (firstImageFile) {
                     const firstImageBlob = await firstImageFile.async('blob');
                     
-                    // If it's a PNG, ensure transparency is preserved
                     if (firstImageName.toLowerCase().endsWith('.png')) {
                         thumbnailUrl = await this.createThumbnailWithWhiteBackground(firstImageBlob);
                     } else {
                         thumbnailUrl = URL.createObjectURL(firstImageBlob);
+                        this.activeBlobUrls.add(thumbnailUrl);
                     }
                 }
             }
@@ -195,8 +209,14 @@ class BookManager {
                 const imageFile = zip.file(imageName);
                 if (imageFile) {
                     const imageBlob = await imageFile.async('blob');
-                    imageUrls[imageName] = URL.createObjectURL(imageBlob);
-                    page.image = imageUrls[imageName];
+                    const imageUrl = URL.createObjectURL(imageBlob);
+                    this.activeBlobUrls.add(imageUrl);
+                    imageUrls[imageName] = imageUrl;
+                    page.image = imageUrl; // Replace filename with blob URL
+                    
+                    console.log(`Created blob URL for ${imageName}:`, imageUrl);
+                } else {
+                    console.warn(`Image file ${imageName} not found in archive`);
                 }
             }
             
@@ -212,6 +232,8 @@ class BookManager {
             };
             
             this.loadedBooks.set(filename, result);
+            console.log('Successfully loaded and cached book:', filename);
+            
             return result;
             
         } catch (error) {
@@ -257,19 +279,14 @@ class BookManager {
     }
     
     cleanup() {
+        console.log('Cleaning up BookManager - revoking', this.activeBlobUrls.size, 'blob URLs');
+        
         // Clean up blob URLs
-        this.loadedBooks.forEach((bookData) => {
-            if (bookData.thumbnailUrl?.startsWith('blob:')) {
-                URL.revokeObjectURL(bookData.thumbnailUrl);
-            }
-            if (bookData.imageUrls) {
-                Object.values(bookData.imageUrls).forEach(url => {
-                    if (url.startsWith('blob:')) {
-                        URL.revokeObjectURL(url);
-                    }
-                });
-            }
+        this.activeBlobUrls.forEach(url => {
+            URL.revokeObjectURL(url);
         });
+        this.activeBlobUrls.clear();
+        
         this.loadedBooks.clear();
     }
 }
