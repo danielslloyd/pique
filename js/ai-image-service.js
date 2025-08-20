@@ -1,7 +1,7 @@
 // AI Image Generation Service
 class AIImageService {
     constructor() {
-        this.openaiApiKey = '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'; // Replace with your actual key
+        this.openaiApiKey = null;
         this.baseUrl = 'https://api.openai.com/v1';
         this.provider = 'openai';
     }
