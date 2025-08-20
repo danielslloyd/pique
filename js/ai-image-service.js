@@ -29,7 +29,7 @@ class AIImageService {
 
     // Build optimized prompts for children's books
     buildCharacterPrompt(description) {
-        return `${description}`;
+        return `${description}, children's book illustration style, cute, friendly, colorful, simple shapes, high quality, clean background, perfect for children's book, safe for kids, G-rated`;
     }
 
     buildScenePrompt(description, characterDescription) {
