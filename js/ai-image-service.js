@@ -1,7 +1,7 @@
 // AI Image Generation Service
 class AIImageService {
     constructor() {
-        this.openaiApiKey = null;
+        this.openaiApiKey = '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'; // Replace with your actual key
         this.baseUrl = 'https://api.openai.com/v1';
         this.provider = 'openai';
     }
@@ -29,7 +29,7 @@ class AIImageService {
 
     // Build optimized prompts for children's books
     buildCharacterPrompt(description) {
-        return `${description}, children's book illustration style, cute, friendly, colorful, simple shapes, high quality, clean background, perfect for children's book, safe for kids, G-rated`;
+        return `${description}`;
     }
 
     buildScenePrompt(description, characterDescription) {
@@ -296,6 +296,14 @@ class ImageGenerationUI {
                         </div>
                         
                         <div class="form-group">
+                            <label for="full-prompt">Full AI Prompt (Editable)</label>
+                            <textarea id="full-prompt" 
+                                placeholder="This will show the full prompt sent to DALL-E">
+                            </textarea>
+                            <small>Edit this to control exactly what gets sent to DALL-E</small>
+                        </div>
+                        
+                        <div class="form-group">
                             <label for="art-style">Image Quality</label>
                             <select id="art-style">
                                 <option value="standard">Standard Quality ($0.04 per image)</option>
@@ -371,12 +379,6 @@ window.aiImageSetup = {
     },
     
     async generateCharacter() {
-        // Make sure API key is still set
-        if (!this.apiKeyStored) {
-            FeedbackManager.show('Please test your API connection first', 'error');
-            return;
-        }
-        
         const description = document.getElementById('character-description').value;
         const quality = document.getElementById('art-style').value;
         
@@ -385,20 +387,46 @@ window.aiImageSetup = {
             return;
         }
         
+        // Build the full prompt and show it to the user
+        const basePrompt = this.aiBookCreator.aiImageService.buildCharacterPrompt(description);
+        const fullPromptField = document.getElementById('full-prompt');
+        if (fullPromptField) {
+            fullPromptField.value = basePrompt;
+        }
+        
         try {
-            const imageUrl = await this.aiBookCreator.generateAndStoreCharacterImage(description, quality);
+            // Use the full prompt from the text area if available, otherwise use the built prompt
+            const finalPrompt = fullPromptField?.value || basePrompt;
+            
+            FeedbackManager.show('Generating character image...', 'info');
+            
+            // Generate directly with the final prompt
+            const result = await this.aiBookCreator.aiImageService.generateImage(finalPrompt, { quality: quality });
+            
+            // Store the result
+            this.aiBookCreator.generatedImages.set('character', {
+                blob: null,
+                url: result.url,
+                originalUrl: result.url,
+                cost: result.cost,
+                provider: result.provider,
+                revisedPrompt: result.revisedPrompt
+            });
             
             // Update UI with generated image
             const preview = document.getElementById('ai-character-preview');
-            preview.innerHTML = `<img src="${imageUrl}" alt="Generated character" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">`;
+            preview.innerHTML = `<img src="${result.url}" alt="Generated character" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">`;
             
             // Show cost and enhanced prompt
             const cost = this.aiBookCreator.getTotalCost();
-            const lastGenerated = this.aiBookCreator.generatedImages.get('character');
             
-            let message = `Character generated! Cost: $${cost}`;
-            if (lastGenerated?.revisedPrompt) {
-                message += `\n\nDALL-E enhanced your prompt: "${lastGenerated.revisedPrompt}"`;
+            let message = `Character generated! Cost: ${cost}`;
+            if (result.revisedPrompt) {
+                message += `\n\nDALL-E enhanced your prompt: "${result.revisedPrompt}"`;
+                // Update the full prompt field with DALL-E's revision
+                if (fullPromptField) {
+                    fullPromptField.value = result.revisedPrompt;
+                }
             }
             
             FeedbackManager.show(message, 'success');
