@@ -361,6 +361,23 @@ window.aiImageSetup = {
     aiBookCreator: new AIBookCreator(),
     apiKeyStored: false,
     
+    updateFullPrompt() {
+        const description = document.getElementById('character-description').value;
+        const style = document.getElementById('art-style-select').value;
+        const fullPromptField = document.getElementById('full-prompt');
+        
+        if (description && fullPromptField) {
+            let fullPrompt = this.aiBookCreator.aiImageService.buildCharacterPrompt(description, style);
+            
+            // Add reference image description if available
+            if (this.referenceImageDescription) {
+                fullPrompt += `. Reference style: ${this.referenceImageDescription}`;
+            }
+            
+            fullPromptField.value = fullPrompt;
+        }
+    },
+
     async testConnection() {
         const apiKey = document.getElementById('api-key').value;
         
