@@ -161,38 +161,25 @@ class AIBookCreator {
         this.aiImageService.setApiKey(apiKey);
     }
 
+    // Generate character image and store locally
     async generateAndStoreCharacterImage(description, quality = 'standard') {
         try {
             FeedbackManager.show('Generating character image...', 'info');
             
             const result = await this.aiImageService.generateCharacterImage(description, quality);
             
-            // Store metadata instead of trying to download the image
+            // Skip blob download due to CORS issues, use URL directly
             this.generatedImages.set('character', {
-                blob: null,
-                url: 'data:image/svg+xml;base64,' + btoa(`
-                    <svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
-                        <rect width="200" height="200" fill="#f0f0f0" stroke="#ccc"/>
-                        <text x="100" y="90" text-anchor="middle" font-size="14" fill="#666">
-                            AI Generated Character
-                        </text>
-                        <text x="100" y="110" text-anchor="middle" font-size="12" fill="#666">
-                            (Network blocked)
-                        </text>
-                        <text x="100" y="130" text-anchor="middle" font-size="10" fill="#666">
-                            Cost: $${result.cost}
-                        </text>
-                    </svg>
-                `),
+                blob: null, // Will be handled later if needed
+                url: result.url, // Use OpenAI URL directly
                 originalUrl: result.url,
                 cost: result.cost,
                 provider: result.provider,
-                revisedPrompt: result.revisedPrompt,
-                networkBlocked: true
+                revisedPrompt: result.revisedPrompt
             });
 
-            FeedbackManager.show(`Character generated successfully! Cost: $${result.cost} (Image blocked by network)`, 'success');
-            return this.generatedImages.get('character').url;
+            FeedbackManager.show('Character image generated successfully!', 'success');
+            return result.url; // Return OpenAI URL directly
             
         } catch (error) {
             FeedbackManager.show(`Error generating character: ${error.message}`, 'error');
