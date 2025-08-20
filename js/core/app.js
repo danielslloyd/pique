@@ -133,6 +133,21 @@ class ReadingApp {
             playerController.skipToNextWord();
         }
     }
+
+    // Add these methods to your ReadingApp class in app.js:
+    showAPISetupStep() {
+        const creatorController = this.router.views.creator;
+        if (creatorController && creatorController.showAPISetupStep) {
+            creatorController.showAPISetupStep();
+        }
+    }
+
+    proceedToCharacterCreation() {
+        const creatorController = this.router.views.creator;
+        if (creatorController && creatorController.showCharacterCreationStep) {
+            creatorController.showCharacterCreationStep();
+        }
+    }
 }
 
 // Initialize the app when DOM is ready

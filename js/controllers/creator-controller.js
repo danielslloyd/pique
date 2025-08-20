@@ -36,68 +36,23 @@ class CreatorController {
     }
 
     renderAICreator() {
-        this.aiCreationData = {
-            characterImage: null,
-            characterDescription: '',
-            generatedCharacter: null,
-            approvedCharacter: null,
-            title: '',
-            author: '',
-            storyPrompt: '',
-            readingLevel: 'early',
-            pageCount: 6,
-            generatedPages: []
-        };
-        
         DOM.$('app-container').innerHTML = CreatorView.renderAICreator();
-        this.showCharacterCreationStep();
+        this.showAPISetupStep();
+    }
+
+    showAPISetupStep() {
+        const stepsContainer = DOM.$('ai-creation-steps');
+        if (!stepsContainer) return;
+        
+        stepsContainer.innerHTML = ImageGenerationUI.renderAPISetup();
+        this.updateFooterForStep('api-setup');
     }
 
     showCharacterCreationStep() {
         const stepsContainer = DOM.$('ai-creation-steps');
         if (!stepsContainer) return;
         
-        stepsContainer.innerHTML = `
-            <div class="ai-step active" id="character-step">
-                <div class="step-header">
-                    <div class="step-number">1</div>
-                    <h2>Create Your Character</h2>
-                    <p>Upload a reference image to create your story's main character</p>
-                </div>
-                
-                <div class="character-upload-section">
-                    <div class="character-preview" id="character-preview">
-                        <div class="character-placeholder">
-                            <div class="upload-icon">📷</div>
-                            <p>Upload character reference image</p>
-                            <small>JPG, PNG supported</small>
-                        </div>
-                    </div>
-                    
-                    <div class="character-controls">
-                        <input type="file" id="character-image-input" accept="image/*" onchange="window.app.handleCharacterImageUpload(event)">
-                        <label for="character-image-input" class="file-input-label">Choose Image</label>
-                        
-                        <div class="character-description">
-                            <label for="character-description-input">Character Description (optional)</label>
-                            <textarea id="character-description-input" placeholder="Describe your character (e.g., 'a friendly young dragon with green scales')"></textarea>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="generated-character-section" id="generated-character-section" style="display: none;">
-                    <h3>Generated Character Design</h3>
-                    <div class="generated-character-preview">
-                        <img id="generated-character-image" alt="Generated character">
-                        <div class="character-actions">
-                            <button onclick="window.app.regenerateCharacter()" class="creator-btn secondary">🔄 Regenerate</button>
-                            <button onclick="window.app.approveCharacter()" class="creator-btn primary">✓ Approve Character</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        `;
-        
+        stepsContainer.innerHTML = ImageGenerationUI.renderCharacterCreation();
         this.updateFooterForStep('character');
     }
 
@@ -106,27 +61,23 @@ class CreatorController {
         if (!footer) return;
         
         switch (step) {
-            case 'character':
+            case 'api-setup':
                 footer.innerHTML = `
                     <button onclick="window.app.returnToLibrary()" class="creator-btn secondary">Cancel</button>
-                    <button onclick="window.app.generateCharacterDesign()" class="creator-btn primary" id="generate-character-btn" disabled>
-                        🎨 Generate Character Design
+                    <button onclick="window.app.proceedToCharacterCreation()" class="creator-btn primary" id="proceed-btn">
+                        Next: Create Character
                     </button>
                 `;
                 break;
-            case 'story':
+            case 'character':
                 footer.innerHTML = `
-                    <button onclick="window.app.showCharacterCreationStep()" class="creator-btn secondary">← Back</button>
-                    <button onclick="window.app.generateAIBook()" class="creator-btn primary" id="generate-story-btn">
-                        🚀 Generate Book
+                    <button onclick="window.app.showAPISetupStep()" class="creator-btn secondary">← Back</button>
+                    <button onclick="window.app.proceedToStoryPlanning()" class="creator-btn primary" id="next-step-btn">
+                        Next: Plan Story
                     </button>
                 `;
                 break;
-            case 'generation':
-                footer.innerHTML = `
-                    <button onclick="window.app.returnToLibrary()" class="creator-btn secondary">Return to Library</button>
-                `;
-                break;
+            // ... rest of your existing cases
         }
     }
 
@@ -361,5 +312,30 @@ class CreatorController {
             this.bookCreator.cleanup();
         }
         this.aiCreationData = null;
+    }
+
+    renderAISetup() {
+        return ImageGenerationUI.renderAPISetup();
+    }
+
+    renderAICharacter() {
+        return ImageGenerationUI.renderCharacterCreation();
+    }
+
+    showAPISetupStep() {
+        const stepsContainer = DOM.$('ai-creation-steps');
+        if (!stepsContainer) return;
+        
+        stepsContainer.innerHTML = ImageGenerationUI.renderAPISetup();
+        this.updateFooterForStep('api-setup');
+    }
+
+    proceedToCharacterCreation() {
+        this.showCharacterCreationStep();
+    }
+
+    proceedToStoryPlanning() {
+        // Future implementation for story planning
+        FeedbackManager.show('Story planning step coming soon!', 'info');
     }
 }
