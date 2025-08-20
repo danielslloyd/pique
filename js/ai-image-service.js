@@ -28,8 +28,16 @@ class AIImageService {
     }
 
     // Build optimized prompts for children's books
-    buildCharacterPrompt(description) {
-        return `${description}, children's book illustration style, cute, friendly, colorful, simple shapes, high quality, clean background, perfect for children's book, safe for kids, G-rated`;
+    buildCharacterPrompt(description, style = 'children_book') {
+        const stylePrompts = {
+            'bold_cartoon': 'bold cartoon style, vibrant colors, thick outlines, exaggerated features, playful and energetic, animation-inspired',
+            'realistic': 'realistic illustration style, detailed textures, natural lighting, lifelike proportions, high detail',
+            'ghibli': 'Studio Ghibli style, soft watercolor textures, whimsical, gentle colors, hand-drawn animation aesthetic, magical atmosphere',
+            'children_book': 'children\'s book illustration style, cute, friendly, colorful, simple shapes, clean background, perfect for young readers'
+        };
+
+        const baseStyle = stylePrompts[style] || stylePrompts['children_book'];
+        return `${description}, ${baseStyle}, high quality, safe for kids, G-rated`;
     }
 
     buildScenePrompt(description, characterDescription) {
@@ -307,6 +315,16 @@ class ImageGenerationUI {
                         </div>
                         
                         <div class="form-group">
+                            <label for="art-style-select">Art Style</label>
+                            <select id="art-style-select" onchange="window.aiImageSetup.updateFullPrompt()">
+                                <option value="children_book">Small Children's Book Style (Simple Shapes)</option>
+                                <option value="bold_cartoon">Bold Cartoon Style</option>
+                                <option value="realistic">Realistic Illustration Style</option>
+                                <option value="ghibli">Studio Ghibli Style</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
                             <label for="full-prompt">Full AI Prompt</label>
                             <textarea id="full-prompt" rows="6"
                                 placeholder="This will show the complete prompt sent to DALL-E">
@@ -315,8 +333,8 @@ class ImageGenerationUI {
                         </div>
                         
                         <div class="form-group">
-                            <label for="art-style">Image Quality</label>
-                            <select id="art-style">
+                            <label for="image-quality">Image Quality</label>
+                            <select id="image-quality">
                                 <option value="standard">Standard Quality ($0.04 per image)</option>
                                 <option value="hd">HD Quality ($0.17 per image)</option>
                             </select>
