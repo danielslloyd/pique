@@ -291,14 +291,25 @@ class ImageGenerationUI {
                         <div class="form-group">
                             <label for="character-description">Character Description</label>
                             <textarea id="character-description" 
-                                placeholder="A friendly blue dragon with small wings and a big smile, wearing a red hat">
+                                placeholder="A friendly blue dragon with small wings and a big smile, wearing a red hat"
+                                oninput="window.aiImageSetup.updateFullPrompt()">
                             </textarea>
                         </div>
                         
                         <div class="form-group">
-                            <label for="full-prompt">Full AI Prompt (Editable)</label>
-                            <textarea id="full-prompt" 
-                                placeholder="This will show the full prompt sent to DALL-E">
+                            <label for="reference-image">Reference Image (Optional)</label>
+                            <input type="file" id="reference-image" accept="image/*" onchange="window.aiImageSetup.handleReferenceImage(event)">
+                            <small>Upload a reference image to help describe the character</small>
+                            <div id="reference-preview" style="margin-top: 10px; display: none;">
+                                <img id="reference-img" style="max-width: 200px; max-height: 200px; border-radius: 4px;">
+                                <p id="reference-description" style="margin-top: 5px; font-style: italic; color: #666;"></p>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="full-prompt">Full AI Prompt</label>
+                            <textarea id="full-prompt" rows="6"
+                                placeholder="This will show the complete prompt sent to DALL-E">
                             </textarea>
                             <small>Edit this to control exactly what gets sent to DALL-E</small>
                         </div>
