@@ -1,3 +1,4 @@
+// Form Components - Reusable form elements for book creation
 class FormComponents {
     static renderBookMetadata() {
         return `
@@ -23,7 +24,7 @@ class FormComponents {
             <section class="pages-section">
                 <h2>Pages</h2>
                 <div class="pages-list" id="pages-list"></div>
-                <button onclick="window.app.addNewPage()" class="add-page-btn">➕ Add New Page</button>
+                <button onclick="window.app.addNewPage()" class="add-page-btn">Add New Page</button>
             </section>`;
     }
 

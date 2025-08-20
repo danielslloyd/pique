@@ -1,23 +1,37 @@
+// Library View - Renders the book library interface
 class LibraryView {
     static render(books) {
         const bookCards = books.map(book => {
-            const thumbnail = book.thumbnail ? 
-                `<img src="${book.thumbnail}" alt="${book.title}" onerror="this.src='./assets/default-book-cover.jpg'">` :
+            // Ensure all properties exist with defaults
+            const safeBook = {
+                filename: book.filename || '',
+                title: book.title || 'Untitled',
+                author: book.author || 'Unknown Author',
+                thumbnail: book.thumbnail || null,
+                loadError: book.loadError || false,
+                isRBook: book.isRBook || false
+            };
+            
+            const thumbnail = safeBook.thumbnail ? 
+                `<img src="${safeBook.thumbnail}" alt="${safeBook.title}" onerror="this.src='./assets/default-book-cover.jpg'">` :
                 `<div class="placeholder-thumbnail">📖</div>`;
             
             const indicators = [
-                book.loadError ? '<span class="error-indicator">⚠ Load Error</span>' : '',
-                book.isRBook ? '<span class="format-indicator">.rbook</span>' : ''
+                safeBook.loadError ? '<span class="error-indicator">⚠ Load Error</span>' : '',
+                safeBook.isRBook ? '<span class="format-indicator">.rbook</span>' : ''
             ].filter(Boolean).join('');
             
-            return TemplateEngine.render(TemplateEngine.templates.bookCard, {
-                filename: book.filename,
-                title: book.title,
-                author: book.author,
-                thumbnail,
-                indicators,
-                errorClass: book.loadError ? 'error' : ''
-            });
+            const errorClass = safeBook.loadError ? 'error' : '';
+            
+            return `
+                <div class="book-card ${errorClass}" onclick="window.app.selectBook('${safeBook.filename}', '${safeBook.title}')">
+                    <div class="book-thumbnail">${thumbnail}</div>
+                    <div class="book-info">
+                        <h3>${safeBook.title}</h3>
+                        <p>${safeBook.author}</p>
+                        ${indicators}
+                    </div>
+                </div>`;
         }).join('');
 
         return `
