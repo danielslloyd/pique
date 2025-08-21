@@ -426,7 +426,7 @@ window.aiImageSetup = {
     
     async generateCharacter() {
         const description = document.getElementById('character-description').value;
-        const quality = document.getElementById('art-style').value;
+        const quality = document.getElementById('image-quality').value;
         
         if (!description) {
             FeedbackManager.show('Please describe your character', 'error');
