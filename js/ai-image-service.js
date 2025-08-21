@@ -425,21 +425,14 @@ window.aiImageSetup = {
     },
     
     async generateCharacter() {
-        const description = document.getElementById('character-description').value;
+        const fullPromptField = document.getElementById('full-prompt');
         const quality = document.getElementById('image-quality').value;
         
-        if (!description) {
-            FeedbackManager.show('Please describe your character', 'error');
+        if (!fullPromptField || !fullPromptField.value.trim()) {
+            FeedbackManager.show('Please enter a character description', 'error');
             return;
         }
-        
-        // Build the full prompt and show it to the user
-        const basePrompt = this.aiBookCreator.aiImageService.buildCharacterPrompt(description);
-        const fullPromptField = document.getElementById('full-prompt');
-        if (fullPromptField) {
-            fullPromptField.value = basePrompt;
-        }
-        
+                
         try {
             // Use the full prompt from the text area if available, otherwise use the built prompt
             const finalPrompt = fullPromptField?.value || basePrompt;
