@@ -59,7 +59,7 @@ class CreatorController {
     updateFooterForStep(step) {
         const footer = DOM.$('ai-creator-footer');
         if (!footer) return;
-        
+
         switch (step) {
             case 'api-setup':
                 footer.innerHTML = `
@@ -74,6 +74,22 @@ class CreatorController {
                     <button onclick="window.app.showAPISetupStep()" class="creator-btn secondary">← Back</button>
                     <button onclick="window.app.proceedToStoryPlanning()" class="creator-btn primary" id="next-step-btn">
                         Next: Plan Story
+                    </button>
+                `;
+                break;
+            case 'story-planning':
+                footer.innerHTML = `
+                    <button onclick="window.app.showCharacterCreationStep()" class="creator-btn secondary">← Back</button>
+                    <button onclick="window.app.generateStoryFromPlan()" class="creator-btn primary" id="generate-story-btn">
+                        Generate Story Pages
+                    </button>
+                `;
+                break;
+            case 'story-review':
+                footer.innerHTML = `
+                    <button onclick="window.app.showStoryPlanningStep()" class="creator-btn secondary">← Back to Planning</button>
+                    <button onclick="window.app.proceedToImageGeneration()" class="creator-btn primary" id="finalize-story-btn">
+                        Next: Generate Images
                     </button>
                 `;
                 break;
@@ -334,8 +350,122 @@ class CreatorController {
         this.showCharacterCreationStep();
     }
 
+    showStoryPlanningStep() {
+        const stepsContainer = DOM.$('ai-creation-steps');
+        if (!stepsContainer) return;
+
+        stepsContainer.innerHTML = ImageGenerationUI.renderStoryPlanning();
+        this.updateFooterForStep('story-planning');
+
+        // Update character summary if available
+        const characterDescription = document.getElementById('character-description')?.value.trim();
+        const characterSummary = DOM.$('character-summary');
+        if (characterSummary && characterDescription) {
+            characterSummary.textContent = characterDescription.substring(0, 100) + (characterDescription.length > 100 ? '...' : '');
+        }
+    }
+
     proceedToStoryPlanning() {
-        // Future implementation for story planning
-        FeedbackManager.show('Story planning step coming soon!', 'info');
+        this.showStoryPlanningStep();
+    }
+
+    async generateStoryFromPlan() {
+        const generateBtn = DOM.$('generate-story-btn');
+        if (generateBtn) {
+            generateBtn.disabled = true;
+            generateBtn.textContent = 'Generating...';
+        }
+
+        try {
+            const pages = await window.aiImageSetup.generateStoryPages();
+
+            if (pages && pages.length > 0) {
+                this.showStoryReviewStep(pages);
+            }
+        } catch (error) {
+            console.error('Story generation error:', error);
+            FeedbackManager.show(`Failed to generate story: ${error.message}`, 'error');
+        } finally {
+            if (generateBtn) {
+                generateBtn.disabled = false;
+                generateBtn.textContent = 'Generate Story Pages';
+            }
+        }
+    }
+
+    showStoryReviewStep(pages) {
+        const stepsContainer = DOM.$('ai-creation-steps');
+        if (!stepsContainer) return;
+
+        stepsContainer.innerHTML = ImageGenerationUI.renderStoryReview(pages);
+        this.updateFooterForStep('story-review');
+
+        // Add event listeners to text areas for auto-saving edits
+        pages.forEach((page, index) => {
+            const textarea = DOM.$(`page-text-${index}`);
+            if (textarea) {
+                textarea.addEventListener('input', (e) => {
+                    window.aiImageSetup.updatePageText(index, e.target.value);
+                });
+            }
+        });
+    }
+
+    async proceedToImageGeneration() {
+        const pages = window.aiImageSetup.aiBookCreator.generatedPages;
+
+        if (!pages || pages.length === 0) {
+            FeedbackManager.show('No story pages found. Please generate story first.', 'error');
+            return;
+        }
+
+        // Here you would implement image generation for each page
+        // For now, let's create a final book with the text and character image
+        try {
+            FeedbackManager.show('Preparing your book...', 'info');
+
+            // Get character image
+            const characterData = window.aiImageSetup.aiBookCreator.generatedImages.get('character');
+
+            if (!characterData || !characterData.blob) {
+                FeedbackManager.show('Character image not found. Please create a character first.', 'error');
+                return;
+            }
+
+            // Clear existing book creator and add pages
+            this.bookCreator.reset();
+
+            // For now, use the character image for all pages
+            // In future, you could generate unique images per page
+            for (const page of pages) {
+                this.bookCreator.addPage(characterData.blob, page.text);
+            }
+
+            // Set metadata
+            const title = prompt('Enter book title:', 'My AI Generated Story');
+            const author = prompt('Enter author name:', 'Young Author');
+
+            if (!title || !author) {
+                FeedbackManager.show('Title and author are required', 'error');
+                return;
+            }
+
+            const storySummary = window.aiImageSetup.aiBookCreator.storyPlan?.storySummary || '';
+            this.bookCreator.setMetadata(title, author, storySummary);
+
+            // Generate the book
+            const filename = await this.bookCreator.generateRBookFile();
+
+            const totalCost = window.aiImageSetup.aiBookCreator.getTotalCost();
+            FeedbackManager.show(`Book "${filename}" generated! Total AI cost: $${totalCost}`, 'success');
+
+            setTimeout(() => {
+                window.app.returnToLibrary();
+            }, 2000);
+
+        } catch (error) {
+            console.error('Book finalization error:', error);
+            FeedbackManager.show(`Failed to create book: ${error.message}`, 'error');
+        }
     }
 }

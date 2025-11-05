@@ -1183,6 +1183,129 @@ input[type="file"] {
     }
 }
 
+/* Story Planning Styles */
+.phonics-sounds-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.phonics-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    background: rgba(254, 253, 251, 0.5);
+    border: 1px solid rgba(237, 232, 224, 0.8);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: 'Figtree', sans-serif;
+    font-size: 0.9rem;
+}
+
+.phonics-checkbox:hover {
+    background: rgba(254, 253, 251, 0.9);
+    border-color: #d4a574;
+}
+
+.phonics-checkbox input[type="checkbox"] {
+    cursor: pointer;
+    width: 16px;
+    height: 16px;
+}
+
+/* Story Review Styles */
+.story-pages-review {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.story-page-review {
+    background: rgba(254, 253, 251, 0.6);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(237, 232, 224, 0.8);
+    border-radius: 8px;
+    padding: 20px;
+    transition: all 0.2s ease;
+}
+
+.story-page-review:hover {
+    box-shadow: 0 2px 8px rgba(47, 27, 20, 0.08);
+}
+
+.page-review-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.page-review-header h3 {
+    font-size: 1.2rem;
+    color: #2f1b14;
+    margin: 0;
+}
+
+.creator-btn.small {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+}
+
+.page-review-content {
+    margin-bottom: 15px;
+}
+
+.page-text-editor {
+    width: 100%;
+    min-height: 80px;
+    padding: 12px;
+    border: 1px solid rgba(237, 232, 224, 0.8);
+    border-radius: 4px;
+    font-family: 'Figtree', sans-serif;
+    font-size: 1rem;
+    line-height: 1.6;
+    resize: vertical;
+    background: white;
+    transition: border-color 0.2s ease;
+}
+
+.page-text-editor:focus {
+    outline: none;
+    border-color: #d4a574;
+}
+
+.page-image-preview {
+    margin-top: 15px;
+    border-radius: 6px;
+    overflow: hidden;
+    max-width: 400px;
+}
+
+.page-image-preview img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.info-text {
+    font-family: 'Figtree', sans-serif;
+    color: #8b7355;
+    font-size: 0.95rem;
+}
+
+.story-plan-summary {
+    font-family: 'Figtree', sans-serif;
+}
+
+.story-plan-summary p {
+    margin-bottom: 8px;
+    color: #2f1b14;
+}
+
 /* Utility Classes */
 .hidden {
     display: none !important;

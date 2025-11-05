@@ -110,30 +110,30 @@ class AIImageService {
                 mode: 'cors',
                 cache: 'no-cache'
             });
-            
+
             if (!response.ok) {
                 throw new Error(`Failed to fetch image: ${response.status}`);
             }
             return await response.blob();
-            
+
         } catch (error) {
             console.warn('Direct fetch failed, trying proxy method:', error);
-            
+
             // Fallback: create image element and convert to canvas
             return new Promise((resolve, reject) => {
                 const img = new Image();
                 img.crossOrigin = 'anonymous';
-                
+
                 img.onload = () => {
                     try {
                         const canvas = document.createElement('canvas');
                         const ctx = canvas.getContext('2d');
-                        
+
                         canvas.width = img.width;
                         canvas.height = img.height;
-                        
+
                         ctx.drawImage(img, 0, 0);
-                        
+
                         canvas.toBlob((blob) => {
                             if (blob) {
                                 resolve(blob);
@@ -141,19 +141,117 @@ class AIImageService {
                                 reject(new Error('Failed to convert image to blob'));
                             }
                         }, 'image/png');
-                        
+
                     } catch (canvasError) {
                         reject(new Error(`Canvas conversion failed: ${canvasError.message}`));
                     }
                 };
-                
+
                 img.onerror = () => {
                     reject(new Error('Failed to load image for conversion'));
                 };
-                
+
                 img.src = imageUrl;
             });
         }
+    }
+
+    // Text generation for story pages
+    async generateStoryText(storySummary, pageNumber, totalPages, readingLevel = null, phonicsSounds = [], characterDescription = '') {
+        const prompt = this.buildStoryTextPrompt(storySummary, pageNumber, totalPages, readingLevel, phonicsSounds, characterDescription);
+
+        try {
+            const response = await fetch(`${this.baseUrl}/chat/completions`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${this.openaiApiKey}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    model: 'gpt-4o-mini',
+                    messages: [
+                        {
+                            role: 'system',
+                            content: 'You are a children\'s book author specializing in age-appropriate, engaging stories. You write clear, simple text perfect for young readers.'
+                        },
+                        {
+                            role: 'user',
+                            content: prompt
+                        }
+                    ],
+                    temperature: 0.8,
+                    max_tokens: 200
+                })
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({}));
+                throw new Error(`OpenAI API error: ${response.status} - ${errorData.error?.message || 'Unknown error'}`);
+            }
+
+            const data = await response.json();
+            const generatedText = data.choices[0].message.content.trim();
+
+            return {
+                text: generatedText,
+                cost: this.calculateTextGenerationCost(data.usage),
+                model: 'gpt-4o-mini'
+            };
+
+        } catch (error) {
+            console.error('Text generation failed:', error);
+            throw new Error(`Failed to generate text: ${error.message}`);
+        }
+    }
+
+    buildStoryTextPrompt(storySummary, pageNumber, totalPages, readingLevel, phonicsSounds, characterDescription) {
+        let prompt = `Write the text for page ${pageNumber} of ${totalPages} for a children's book.\n\n`;
+        prompt += `Story Summary: ${storySummary}\n\n`;
+
+        if (characterDescription) {
+            prompt += `Main Character: ${characterDescription}\n\n`;
+        }
+
+        if (readingLevel) {
+            const readingLevelGuidance = {
+                'pre-k': 'Use very simple 2-4 word sentences. Focus on basic concepts and repetition.',
+                'kindergarten': 'Use simple 4-6 word sentences. Include basic sight words and simple vocabulary.',
+                'grade-1': 'Use clear 5-8 word sentences. Include common sight words and simple descriptive words.',
+                'grade-2': 'Use varied 6-10 word sentences. Include more descriptive language and simple compound sentences.',
+                'grade-3': 'Use 8-12 word sentences with more complex vocabulary. Include varied sentence structures.'
+            };
+            prompt += `Reading Level: ${readingLevel}\nGuidance: ${readingLevelGuidance[readingLevel]}\n\n`;
+        }
+
+        if (phonicsSounds && phonicsSounds.length > 0) {
+            prompt += `Emphasize these phonics sounds: ${phonicsSounds.join(', ')}\n`;
+            prompt += `Try to include 2-3 words that feature these sounds naturally in the story.\n\n`;
+        }
+
+        prompt += `Requirements:\n`;
+        prompt += `- Write engaging text appropriate for page ${pageNumber} of the story arc\n`;
+        prompt += `- Keep it concise (2-3 sentences max)\n`;
+        prompt += `- Make it age-appropriate and exciting for children\n`;
+        prompt += `- The text should work well with an illustration\n`;
+
+        if (pageNumber === 1) {
+            prompt += `- This is the FIRST page, so introduce the character and setting\n`;
+        } else if (pageNumber === totalPages) {
+            prompt += `- This is the FINAL page, so provide a satisfying conclusion\n`;
+        } else {
+            prompt += `- This is a MIDDLE page, so advance the story naturally\n`;
+        }
+
+        prompt += `\nReturn ONLY the text for this page, no titles or labels.`;
+
+        return prompt;
+    }
+
+    calculateTextGenerationCost(usage) {
+        // GPT-4o-mini pricing: $0.150 per 1M input tokens, $0.600 per 1M output tokens
+        const inputCost = (usage.prompt_tokens / 1000000) * 0.150;
+        const outputCost = (usage.completion_tokens / 1000000) * 0.600;
+        return inputCost + outputCost;
     }
 }
 
@@ -162,11 +260,80 @@ class AIBookCreator {
     constructor() {
         this.aiImageService = new AIImageService();
         this.generatedImages = new Map();
+        this.generatedPages = [];
+        this.storyPlan = null;
+        this.totalCost = 0;
     }
 
     // Initialize with API key
     setupImageGeneration(apiKey) {
         this.aiImageService.setApiKey(apiKey);
+    }
+
+    // Store story planning data
+    setStoryPlan(storySummary, numPages, readingLevel, phonicsSounds, characterDescription) {
+        this.storyPlan = {
+            storySummary,
+            numPages,
+            readingLevel,
+            phonicsSounds,
+            characterDescription
+        };
+    }
+
+    // Generate text for a specific page
+    async generatePageText(pageNumber) {
+        if (!this.storyPlan) {
+            throw new Error('Story plan not set. Call setStoryPlan first.');
+        }
+
+        const { storySummary, numPages, readingLevel, phonicsSounds, characterDescription } = this.storyPlan;
+
+        try {
+            const result = await this.aiImageService.generateStoryText(
+                storySummary,
+                pageNumber,
+                numPages,
+                readingLevel,
+                phonicsSounds,
+                characterDescription
+            );
+
+            this.totalCost += result.cost;
+            return result.text;
+
+        } catch (error) {
+            throw new Error(`Failed to generate text for page ${pageNumber}: ${error.message}`);
+        }
+    }
+
+    // Generate all story pages (text only)
+    async generateAllStoryPages() {
+        if (!this.storyPlan) {
+            throw new Error('Story plan not set. Call setStoryPlan first.');
+        }
+
+        this.generatedPages = [];
+
+        for (let i = 1; i <= this.storyPlan.numPages; i++) {
+            try {
+                FeedbackManager.show(`Generating text for page ${i} of ${this.storyPlan.numPages}...`, 'info');
+                const text = await this.generatePageText(i);
+
+                this.generatedPages.push({
+                    pageNumber: i,
+                    text: text,
+                    imageUrl: null,
+                    imageBlob: null
+                });
+
+            } catch (error) {
+                FeedbackManager.show(`Error generating page ${i}: ${error.message}`, 'error');
+                throw error;
+            }
+        }
+
+        return this.generatedPages;
     }
 
     // Generate character image and store locally
@@ -222,7 +389,7 @@ class AIBookCreator {
 
     // Get total generation cost
     getTotalCost() {
-        let total = 0;
+        let total = this.totalCost || 0;
         for (const [key, data] of this.generatedImages) {
             total += data.cost || 0;
         }
@@ -237,6 +404,9 @@ class AIBookCreator {
             }
         }
         this.generatedImages.clear();
+        this.generatedPages = [];
+        this.storyPlan = null;
+        this.totalCost = 0;
     }
 }
 
@@ -350,6 +520,156 @@ class ImageGenerationUI {
                             <input type="file" id="character-upload" accept="image/*" onchange="window.aiImageSetup.handleCharacterUpload(event)" style="margin-top: 8px;">
                         </div>
                     </div>
+                </div>
+            </div>
+        `;
+    }
+
+    static renderStoryPlanning() {
+        return `
+            <div class="ai-step">
+                <div class="step-header">
+                    <div class="step-number">📖</div>
+                    <h2>Plan Your Story</h2>
+                    <p>Describe your story and let AI generate the pages</p>
+                </div>
+
+                <div class="form-group">
+                    <label for="story-summary">Story Summary *</label>
+                    <textarea id="story-summary" rows="4"
+                        placeholder="A brave knight goes on an adventure to find a magical treasure in a mysterious forest. Along the way, they meet friendly animals who help them solve riddles."
+                        required></textarea>
+                    <small>Briefly describe what happens in your story (2-3 sentences)</small>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="num-pages">Number of Pages *</label>
+                        <select id="num-pages">
+                            <option value="4">4 pages</option>
+                            <option value="6">6 pages</option>
+                            <option value="8" selected>8 pages</option>
+                            <option value="10">10 pages</option>
+                            <option value="12">12 pages</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="reading-level">Reading Level (Optional)</label>
+                        <select id="reading-level">
+                            <option value="">No preference</option>
+                            <option value="pre-k">Pre-K (Ages 3-4)</option>
+                            <option value="kindergarten">Kindergarten (Ages 5-6)</option>
+                            <option value="grade-1" selected>Grade 1 (Ages 6-7)</option>
+                            <option value="grade-2">Grade 2 (Ages 7-8)</option>
+                            <option value="grade-3">Grade 3 (Ages 8-9)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Phonics Sounds to Emphasize (Optional)</label>
+                    <div class="phonics-sounds-grid" id="phonics-sounds">
+                        <label class="phonics-checkbox">
+                            <input type="checkbox" value="short-a"> Short A (cat, hat)
+                        </label>
+                        <label class="phonics-checkbox">
+                            <input type="checkbox" value="short-e"> Short E (bed, red)
+                        </label>
+                        <label class="phonics-checkbox">
+                            <input type="checkbox" value="short-i"> Short I (pig, big)
+                        </label>
+                        <label class="phonics-checkbox">
+                            <input type="checkbox" value="short-o"> Short O (dog, log)
+                        </label>
+                        <label class="phonics-checkbox">
+                            <input type="checkbox" value="short-u"> Short U (bug, rug)
+                        </label>
+                        <label class="phonics-checkbox">
+                            <input type="checkbox" value="long-a"> Long A (cake, make)
+                        </label>
+                        <label class="phonics-checkbox">
+                            <input type="checkbox" value="long-e"> Long E (tree, bee)
+                        </label>
+                        <label class="phonics-checkbox">
+                            <input type="checkbox" value="long-i"> Long I (bike, like)
+                        </label>
+                        <label class="phonics-checkbox">
+                            <input type="checkbox" value="long-o"> Long O (boat, coat)
+                        </label>
+                        <label class="phonics-checkbox">
+                            <input type="checkbox" value="long-u"> Long U (flute, cute)
+                        </label>
+                        <label class="phonics-checkbox">
+                            <input type="checkbox" value="ch"> CH (chair, chip)
+                        </label>
+                        <label class="phonics-checkbox">
+                            <input type="checkbox" value="sh"> SH (ship, shop)
+                        </label>
+                        <label class="phonics-checkbox">
+                            <input type="checkbox" value="th"> TH (this, that)
+                        </label>
+                        <label class="phonics-checkbox">
+                            <input type="checkbox" value="wh"> WH (when, what)
+                        </label>
+                        <label class="phonics-checkbox">
+                            <input type="checkbox" value="bl"> BL blend (blue, black)
+                        </label>
+                        <label class="phonics-checkbox">
+                            <input type="checkbox" value="cl"> CL blend (clap, clean)
+                        </label>
+                        <label class="phonics-checkbox">
+                            <input type="checkbox" value="fl"> FL blend (flag, fly)
+                        </label>
+                        <label class="phonics-checkbox">
+                            <input type="checkbox" value="st"> ST blend (stop, star)
+                        </label>
+                    </div>
+                    <small>Select sounds you'd like the story to focus on for phonics practice</small>
+                </div>
+
+                <div class="story-plan-summary" style="margin-top: 20px; padding: 15px; background: #f5f5f5; border-radius: 6px;">
+                    <p><strong>Character:</strong> <span id="character-summary">Not yet created</span></p>
+                    <p><strong>Estimated Cost:</strong> Text generation is very affordable (~$0.001 per page with GPT-4o-mini)</p>
+                </div>
+            </div>
+        `;
+    }
+
+    static renderStoryReview(pages) {
+        let pagesHtml = pages.map((page, index) => `
+            <div class="story-page-review" id="page-review-${index}">
+                <div class="page-review-header">
+                    <h3>Page ${page.pageNumber}</h3>
+                    <button onclick="window.aiImageSetup.regeneratePage(${index})" class="creator-btn secondary small">
+                        🔄 Regenerate
+                    </button>
+                </div>
+                <div class="page-review-content">
+                    <textarea id="page-text-${index}" rows="3" class="page-text-editor">${page.text}</textarea>
+                </div>
+                ${page.imageUrl ? `
+                    <div class="page-image-preview">
+                        <img src="${page.imageUrl}" alt="Page ${page.pageNumber}">
+                    </div>
+                ` : ''}
+            </div>
+        `).join('');
+
+        return `
+            <div class="ai-step">
+                <div class="step-header">
+                    <div class="step-number">✏️</div>
+                    <h2>Review & Edit Story Pages</h2>
+                    <p>Review the generated text and make any edits before generating images</p>
+                </div>
+
+                <div class="story-pages-review">
+                    ${pagesHtml}
+                </div>
+
+                <div class="review-actions" style="margin-top: 20px; text-align: center;">
+                    <p class="info-text">You can edit any text directly. Changes will be saved automatically.</p>
                 </div>
             </div>
         `;
@@ -484,7 +804,7 @@ window.aiImageSetup = {
         reader.onload = (e) => {
             const preview = document.getElementById('ai-character-preview');
             preview.innerHTML = `<img src="${e.target.result}" alt="Uploaded character" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">`;
-            
+
             // Store for the book creation process
             this.aiBookCreator.generatedImages.set('character', {
                 blob: file,
@@ -496,6 +816,87 @@ window.aiImageSetup = {
             FeedbackManager.show('Character image uploaded successfully!', 'success');
         };
         reader.readAsDataURL(file);
+    },
+
+    // Generate story pages based on planning inputs
+    async generateStoryPages() {
+        const storySummary = document.getElementById('story-summary')?.value.trim();
+        const numPages = parseInt(document.getElementById('num-pages')?.value || 8);
+        const readingLevel = document.getElementById('reading-level')?.value;
+
+        // Get selected phonics sounds
+        const phonicsCheckboxes = document.querySelectorAll('#phonics-sounds input[type="checkbox"]:checked');
+        const phonicsSounds = Array.from(phonicsCheckboxes).map(cb => cb.value);
+
+        if (!storySummary) {
+            FeedbackManager.show('Please enter a story summary', 'error');
+            return false;
+        }
+
+        // Get character description from the character creation step
+        const characterData = this.aiBookCreator.generatedImages.get('character');
+        const characterDescription = document.getElementById('character-description')?.value.trim() || '';
+
+        try {
+            // Set the story plan
+            this.aiBookCreator.setStoryPlan(
+                storySummary,
+                numPages,
+                readingLevel || null,
+                phonicsSounds,
+                characterDescription
+            );
+
+            // Generate all pages
+            const pages = await this.aiBookCreator.generateAllStoryPages();
+
+            FeedbackManager.show(`Successfully generated ${pages.length} pages! Total cost: $${this.aiBookCreator.getTotalCost()}`, 'success');
+
+            return pages;
+
+        } catch (error) {
+            console.error('Story generation failed:', error);
+            FeedbackManager.show(`Failed to generate story: ${error.message}`, 'error');
+            return null;
+        }
+    },
+
+    // Regenerate a specific page
+    async regeneratePage(pageIndex) {
+        if (!this.aiBookCreator.generatedPages || pageIndex >= this.aiBookCreator.generatedPages.length) {
+            FeedbackManager.show('Invalid page index', 'error');
+            return;
+        }
+
+        const page = this.aiBookCreator.generatedPages[pageIndex];
+
+        try {
+            FeedbackManager.show(`Regenerating page ${page.pageNumber}...`, 'info');
+
+            const newText = await this.aiBookCreator.generatePageText(page.pageNumber);
+
+            // Update the page
+            this.aiBookCreator.generatedPages[pageIndex].text = newText;
+
+            // Update the textarea
+            const textarea = document.getElementById(`page-text-${pageIndex}`);
+            if (textarea) {
+                textarea.value = newText;
+            }
+
+            FeedbackManager.show(`Page ${page.pageNumber} regenerated successfully!`, 'success');
+
+        } catch (error) {
+            console.error('Page regeneration failed:', error);
+            FeedbackManager.show(`Failed to regenerate page: ${error.message}`, 'error');
+        }
+    },
+
+    // Update page text from the review interface
+    updatePageText(pageIndex, newText) {
+        if (this.aiBookCreator.generatedPages && pageIndex < this.aiBookCreator.generatedPages.length) {
+            this.aiBookCreator.generatedPages[pageIndex].text = newText;
+        }
     }
 };
 
