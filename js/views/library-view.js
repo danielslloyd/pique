@@ -45,6 +45,7 @@ class LibraryView {
                     <input type="file" id="book-file-input" accept=".rbook,.zip" style="display: none;">
                     <button onclick="document.getElementById('book-file-input').click()" class="add-book-btn">📁 Load .rbook File</button>
                     <button onclick="window.app.showBookCreator()" class="add-book-btn">➕ Create New Book</button>
+                    <button onclick="window.app.showImageGenerator()" class="add-book-btn">🎨 Image Generator</button>
                 </div>
             </div>`;
     }

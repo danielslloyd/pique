@@ -5,7 +5,8 @@ class AppRouter {
         this.views = {
             library: new LibraryController(),
             player: new PlayerController(),
-            creator: new CreatorController()
+            creator: new CreatorController(),
+            generator: new GeneratorController()
         };
     }
 
@@ -35,13 +36,16 @@ class AppRouter {
         try {
             if (view === 'library') {
                 await viewController.init();
+            } else if (view === 'generator') {
+                const container = document.getElementById('app-container');
+                await viewController.init(container);
             } else {
                 await viewController.render(data);
             }
-            
+
             // Update page title
             this.updatePageTitle(view, data);
-            
+
         } catch (error) {
             console.error(`Error navigating to ${view}:`, error);
             FeedbackManager.show(`Error loading ${view}: ${error.message}`, 'error');
@@ -62,6 +66,9 @@ class AppRouter {
                 break;
             case 'creator':
                 document.title = 'Create New Book - Reading Library';
+                break;
+            case 'generator':
+                document.title = 'Image Generator - Pique';
                 break;
             default:
                 document.title = 'Reading Library';

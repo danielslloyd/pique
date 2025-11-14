@@ -32,6 +32,10 @@ class ReadingApp {
         this.router.navigateTo('creator', 'selector');
     }
 
+    showImageGenerator() {
+        this.router.navigateTo('generator');
+    }
+
     selectCreationMode(mode) {
         this.router.navigateTo('creator', mode);
     }
