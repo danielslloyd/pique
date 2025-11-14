@@ -1,0 +1,3352 @@
+{
+  "199": {
+    "inputs": {
+      "seed": 1034973049061646,
+      "steps": [
+        "844",
+        0
+      ],
+      "cfg": [
+        "850",
+        0
+      ],
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "denoise": 1,
+      "model": [
+        "547",
+        0
+      ],
+      "positive": [
+        "1199",
+        0
+      ],
+      "negative": [
+        "1199",
+        0
+      ],
+      "latent_image": [
+        "200",
+        0
+      ]
+    },
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "KSampler"
+    }
+  },
+  "200": {
+    "inputs": {
+      "width": 2048,
+      "height": 1024,
+      "batch_size": 1
+    },
+    "class_type": "EmptySD3LatentImage",
+    "_meta": {
+      "title": "EmptySD3LatentImage"
+    }
+  },
+  "207": {
+    "inputs": {
+      "samples": [
+        "199",
+        0
+      ],
+      "vae": [
+        "360",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "208": {
+    "inputs": {
+      "filename_prefix": [
+        "911",
+        0
+      ],
+      "images": [
+        "207",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image"
+    }
+  },
+  "213": {
+    "inputs": {
+      "image": "IMG_5842.JPG"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load Image"
+    }
+  },
+  "305": {
+    "inputs": {
+      "filename_prefix": [
+        "942",
+        0
+      ],
+      "images": [
+        "318",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image"
+    }
+  },
+  "306": {
+    "inputs": {
+      "filename_prefix": [
+        "942",
+        0
+      ],
+      "images": [
+        "314",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image"
+    }
+  },
+  "307": {
+    "inputs": {
+      "filename_prefix": [
+        "942",
+        0
+      ],
+      "images": [
+        "315",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image"
+    }
+  },
+  "308": {
+    "inputs": {
+      "filename_prefix": [
+        "942",
+        0
+      ],
+      "images": [
+        "316",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image"
+    }
+  },
+  "314": {
+    "inputs": {
+      "rotate_pitch": -8,
+      "rotate_yaw": -9,
+      "rotate_roll": 0,
+      "blink": 5,
+      "eyebrow": 0,
+      "wink": 20,
+      "pupil_x": 11.5,
+      "pupil_y": 7.9,
+      "aaa": 18.0001220703125,
+      "eee": 10.700000000000001,
+      "woo": 0,
+      "smile": 1.3,
+      "src_ratio": 1,
+      "sample_ratio": 1,
+      "crop_factor": 1.5,
+      "src_image": [
+        "369",
+        0
+      ]
+    },
+    "class_type": "ExpressionEditor",
+    "_meta": {
+      "title": "Expression Editor (PHM)"
+    }
+  },
+  "315": {
+    "inputs": {
+      "rotate_pitch": -12,
+      "rotate_yaw": -5.6000000000000005,
+      "rotate_roll": 0,
+      "blink": 5,
+      "eyebrow": 15,
+      "wink": 20,
+      "pupil_x": 0,
+      "pupil_y": 0,
+      "aaa": 0,
+      "eee": 10.700000000000001,
+      "woo": 0,
+      "smile": -0.18,
+      "src_ratio": 1,
+      "sample_ratio": 1,
+      "crop_factor": "OnlyExpression",
+      "src_image": [
+        "369",
+        0
+      ]
+    },
+    "class_type": "ExpressionEditor",
+    "_meta": {
+      "title": "Expression Editor (PHM)"
+    }
+  },
+  "316": {
+    "inputs": {
+      "rotate_pitch": 0,
+      "rotate_yaw": 12,
+      "rotate_roll": 0,
+      "blink": 0,
+      "eyebrow": 0,
+      "wink": 0,
+      "pupil_x": -15,
+      "pupil_y": 0,
+      "aaa": 97,
+      "eee": -2.9000000000000004,
+      "woo": 0,
+      "smile": -0.26,
+      "src_ratio": 1,
+      "sample_ratio": 1,
+      "crop_factor": "OnlyExpression",
+      "src_image": [
+        "369",
+        0
+      ]
+    },
+    "class_type": "ExpressionEditor",
+    "_meta": {
+      "title": "Expression Editor (PHM)"
+    }
+  },
+  "318": {
+    "inputs": {
+      "rotate_pitch": 0,
+      "rotate_yaw": 10,
+      "rotate_roll": 0,
+      "blink": -14,
+      "eyebrow": -10,
+      "wink": 20,
+      "pupil_x": 0,
+      "pupil_y": 0,
+      "aaa": 0,
+      "eee": 0,
+      "woo": 0,
+      "smile": -0.24,
+      "src_ratio": 0.4100000000000001,
+      "sample_ratio": 1,
+      "crop_factor": 1.5,
+      "src_image": [
+        "369",
+        0
+      ]
+    },
+    "class_type": "ExpressionEditor",
+    "_meta": {
+      "title": "Expression Editor (PHM)"
+    }
+  },
+  "360": {
+    "inputs": {
+      "vae_name": "qwen_image_vae.safetensors"
+    },
+    "class_type": "VAELoader",
+    "_meta": {
+      "title": "Load VAE"
+    }
+  },
+  "362": {
+    "inputs": {
+      "clip_name": "qwen\\qwen_2.5_vl_7b_fp8_scaled.safetensors",
+      "type": "qwen_image",
+      "device": "cpu"
+    },
+    "class_type": "CLIPLoader",
+    "_meta": {
+      "title": "Load CLIP"
+    }
+  },
+  "368": {
+    "inputs": {
+      "filename_prefix": [
+        "913",
+        0
+      ],
+      "images": [
+        "369",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image"
+    }
+  },
+  "369": {
+    "inputs": {
+      "samples": [
+        "376",
+        0
+      ],
+      "vae": [
+        "360",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "370": {
+    "inputs": {
+      "width": 1024,
+      "height": 1024,
+      "batch_size": 1
+    },
+    "class_type": "EmptySD3LatentImage",
+    "_meta": {
+      "title": "EmptySD3LatentImage"
+    }
+  },
+  "374": {
+    "inputs": {
+      "image": [
+        "213",
+        0
+      ]
+    },
+    "class_type": "FluxKontextImageScale",
+    "_meta": {
+      "title": "FluxKontextImageScale"
+    }
+  },
+  "376": {
+    "inputs": {
+      "seed": 1034973049061636,
+      "steps": [
+        "844",
+        0
+      ],
+      "cfg": [
+        "850",
+        0
+      ],
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "denoise": 1,
+      "model": [
+        "547",
+        0
+      ],
+      "positive": [
+        "1201",
+        0
+      ],
+      "negative": [
+        "1201",
+        0
+      ],
+      "latent_image": [
+        "370",
+        0
+      ]
+    },
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "KSampler"
+    }
+  },
+  "423": {
+    "inputs": {
+      "filename_prefix": [
+        "914",
+        0
+      ],
+      "images": [
+        "433",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image"
+    }
+  },
+  "426": {
+    "inputs": {
+      "width": 1024,
+      "height": 1024,
+      "batch_size": 1
+    },
+    "class_type": "EmptySD3LatentImage",
+    "_meta": {
+      "title": "EmptySD3LatentImage"
+    }
+  },
+  "429": {
+    "inputs": {
+      "seed": 1034973049061638,
+      "steps": [
+        "844",
+        0
+      ],
+      "cfg": [
+        "850",
+        0
+      ],
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "denoise": 1,
+      "model": [
+        "547",
+        0
+      ],
+      "positive": [
+        "1202",
+        0
+      ],
+      "negative": [
+        "1202",
+        0
+      ],
+      "latent_image": [
+        "426",
+        0
+      ]
+    },
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "KSampler"
+    }
+  },
+  "430": {
+    "inputs": {
+      "image": [
+        "213",
+        0
+      ]
+    },
+    "class_type": "FluxKontextImageScale",
+    "_meta": {
+      "title": "FluxKontextImageScale"
+    }
+  },
+  "433": {
+    "inputs": {
+      "samples": [
+        "429",
+        0
+      ],
+      "vae": [
+        "360",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "453": {
+    "inputs": {
+      "filename_prefix": [
+        "919",
+        0
+      ],
+      "images": [
+        "463",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image"
+    }
+  },
+  "456": {
+    "inputs": {
+      "width": 1024,
+      "height": 1024,
+      "batch_size": 1
+    },
+    "class_type": "EmptySD3LatentImage",
+    "_meta": {
+      "title": "EmptySD3LatentImage"
+    }
+  },
+  "459": {
+    "inputs": {
+      "seed": 1034973049061637,
+      "steps": [
+        "844",
+        0
+      ],
+      "cfg": [
+        "850",
+        0
+      ],
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "denoise": 1,
+      "model": [
+        "547",
+        0
+      ],
+      "positive": [
+        "1208",
+        0
+      ],
+      "negative": [
+        "1208",
+        0
+      ],
+      "latent_image": [
+        "456",
+        0
+      ]
+    },
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "KSampler"
+    }
+  },
+  "460": {
+    "inputs": {
+      "image": [
+        "213",
+        0
+      ]
+    },
+    "class_type": "FluxKontextImageScale",
+    "_meta": {
+      "title": "FluxKontextImageScale"
+    }
+  },
+  "463": {
+    "inputs": {
+      "samples": [
+        "459",
+        0
+      ],
+      "vae": [
+        "360",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "464": {
+    "inputs": {
+      "filename_prefix": [
+        "921",
+        0
+      ],
+      "images": [
+        "473",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image"
+    }
+  },
+  "467": {
+    "inputs": {
+      "width": 1024,
+      "height": 1024,
+      "batch_size": 1
+    },
+    "class_type": "EmptySD3LatentImage",
+    "_meta": {
+      "title": "EmptySD3LatentImage"
+    }
+  },
+  "470": {
+    "inputs": {
+      "seed": 1034973049061638,
+      "steps": [
+        "844",
+        0
+      ],
+      "cfg": [
+        "850",
+        0
+      ],
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "denoise": 1,
+      "model": [
+        "547",
+        0
+      ],
+      "positive": [
+        "1210",
+        0
+      ],
+      "negative": [
+        "1210",
+        0
+      ],
+      "latent_image": [
+        "467",
+        0
+      ]
+    },
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "KSampler"
+    }
+  },
+  "471": {
+    "inputs": {
+      "image": [
+        "207",
+        0
+      ]
+    },
+    "class_type": "FluxKontextImageScale",
+    "_meta": {
+      "title": "FluxKontextImageScale"
+    }
+  },
+  "473": {
+    "inputs": {
+      "samples": [
+        "470",
+        0
+      ],
+      "vae": [
+        "360",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "486": {
+    "inputs": {
+      "rotate_pitch": -14,
+      "rotate_yaw": -12.1,
+      "rotate_roll": 0,
+      "blink": -3.5,
+      "eyebrow": 0,
+      "wink": 0,
+      "pupil_x": 0.1,
+      "pupil_y": 0,
+      "aaa": 0,
+      "eee": 0,
+      "woo": 0,
+      "smile": -0.3,
+      "src_ratio": 1,
+      "sample_ratio": 1,
+      "crop_factor": "OnlyExpression",
+      "src_image": [
+        "369",
+        0
+      ]
+    },
+    "class_type": "ExpressionEditor",
+    "_meta": {
+      "title": "Expression Editor (PHM)"
+    }
+  },
+  "487": {
+    "inputs": {
+      "filename_prefix": [
+        "942",
+        0
+      ],
+      "images": [
+        "486",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image"
+    }
+  },
+  "513": {
+    "inputs": {
+      "inputcount": 2,
+      "delimiter": " ",
+      "return_list": false,
+      "Update inputs": null,
+      "string_1": [
+        "514",
+        0
+      ],
+      "string_2": [
+        "515",
+        0
+      ]
+    },
+    "class_type": "JoinStringMulti",
+    "_meta": {
+      "title": "Join String Multi"
+    }
+  },
+  "514": {
+    "inputs": {
+      "string": "create a full body turnaround sheet of this exact character, four full-body poses on pure white background: front view, left profile, back view, — evenly spaced in a clean horizontal row, consistent lighting and style, no background noise, no shadows, same proportions and detailing across all views,  wearing sneakers",
+      "strip_newlines": true
+    },
+    "class_type": "StringConstantMultiline",
+    "_meta": {
+      "title": "String Constant Multiline"
+    }
+  },
+  "515": {
+    "inputs": {
+      "string": "Create an image of this character in this style.",
+      "strip_newlines": true
+    },
+    "class_type": "StringConstantMultiline",
+    "_meta": {
+      "title": "PROMPT (One Sentence: Describe style, character, clothes...)"
+    }
+  },
+  "538": {
+    "inputs": {
+      "width": 1280,
+      "height": 720,
+      "batch_size": 1
+    },
+    "class_type": "EmptySD3LatentImage",
+    "_meta": {
+      "title": "EmptySD3LatentImage"
+    }
+  },
+  "546": {
+    "inputs": {
+      "gguf_name": "gguf\\Qwen-Image-Edit-2509-Q5_K_M.gguf"
+    },
+    "class_type": "LoaderGGUF",
+    "_meta": {
+      "title": "GGUF Loader"
+    }
+  },
+  "547": {
+    "inputs": {
+      "lora_name": "Qwen-Image-Lightning-4steps-V1.0-bf16.safetensors",
+      "strength_model": 1,
+      "model": [
+        "1114",
+        0
+      ]
+    },
+    "class_type": "LoraLoaderModelOnly",
+    "_meta": {
+      "title": "LoraLoaderModelOnly"
+    }
+  },
+  "588": {
+    "inputs": {
+      "value": "MichaelTest1"
+    },
+    "class_type": "PrimitiveStringMultiline",
+    "_meta": {
+      "title": "NAME"
+    }
+  },
+  "592": {
+    "inputs": {
+      "string": "create a candid close up of the characters face with a neutral expression and neutral lighting. Frontal view looking into the camera. The character is in front of a white background. Keep the proportions and facial features exactly the same. In the style of stylized 3d animation",
+      "strip_newlines": true
+    },
+    "class_type": "StringConstantMultiline",
+    "_meta": {
+      "title": "String Constant Multiline"
+    }
+  },
+  "593": {
+    "inputs": {
+      "inputcount": 2,
+      "delimiter": " ",
+      "return_list": false,
+      "Update inputs": null,
+      "string_1": [
+        "592",
+        0
+      ],
+      "string_2": [
+        "515",
+        0
+      ]
+    },
+    "class_type": "JoinStringMulti",
+    "_meta": {
+      "title": "Join String Multi"
+    }
+  },
+  "595": {
+    "inputs": {
+      "string": "Create a side view of the head showing the characters profile. Keep the proportions, clothes and facial features exactly the same.  In front of a white background. Close up of the head. ",
+      "strip_newlines": true
+    },
+    "class_type": "StringConstantMultiline",
+    "_meta": {
+      "title": "String Constant Multiline"
+    }
+  },
+  "596": {
+    "inputs": {
+      "inputcount": 2,
+      "delimiter": " ",
+      "return_list": false,
+      "Update inputs": null,
+      "string_1": [
+        "595",
+        0
+      ],
+      "string_2": [
+        "515",
+        0
+      ]
+    },
+    "class_type": "JoinStringMulti",
+    "_meta": {
+      "title": "Join String Multi"
+    }
+  },
+  "602": {
+    "inputs": {
+      "filename_prefix": [
+        "915",
+        0
+      ],
+      "images": [
+        "611",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image"
+    }
+  },
+  "605": {
+    "inputs": {
+      "width": 1024,
+      "height": 1024,
+      "batch_size": 1
+    },
+    "class_type": "EmptySD3LatentImage",
+    "_meta": {
+      "title": "EmptySD3LatentImage"
+    }
+  },
+  "608": {
+    "inputs": {
+      "seed": 1034973049061637,
+      "steps": [
+        "844",
+        0
+      ],
+      "cfg": [
+        "850",
+        0
+      ],
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "denoise": 1,
+      "model": [
+        "547",
+        0
+      ],
+      "positive": [
+        "1203",
+        0
+      ],
+      "negative": [
+        "1203",
+        0
+      ],
+      "latent_image": [
+        "605",
+        0
+      ]
+    },
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "KSampler"
+    }
+  },
+  "609": {
+    "inputs": {
+      "image": [
+        "213",
+        0
+      ]
+    },
+    "class_type": "FluxKontextImageScale",
+    "_meta": {
+      "title": "FluxKontextImageScale"
+    }
+  },
+  "611": {
+    "inputs": {
+      "samples": [
+        "608",
+        0
+      ],
+      "vae": [
+        "360",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "613": {
+    "inputs": {
+      "inputcount": 2,
+      "delimiter": " ",
+      "return_list": false,
+      "Update inputs": null,
+      "string_1": [
+        "616",
+        0
+      ],
+      "string_2": [
+        "515",
+        0
+      ]
+    },
+    "class_type": "JoinStringMulti",
+    "_meta": {
+      "title": "Join String Multi"
+    }
+  },
+  "616": {
+    "inputs": {
+      "string": "Create an over the shoulder view. Back of the characters head looking away from the camera. In front of a white background.",
+      "strip_newlines": true
+    },
+    "class_type": "StringConstantMultiline",
+    "_meta": {
+      "title": "String Constant Multiline"
+    }
+  },
+  "634": {
+    "inputs": {
+      "width": 1024,
+      "height": 1024,
+      "batch_size": 1
+    },
+    "class_type": "EmptySD3LatentImage",
+    "_meta": {
+      "title": "EmptySD3LatentImage"
+    }
+  },
+  "637": {
+    "inputs": {
+      "seed": 1034973049061638,
+      "steps": [
+        "844",
+        0
+      ],
+      "cfg": [
+        "850",
+        0
+      ],
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "denoise": 1,
+      "model": [
+        "547",
+        0
+      ],
+      "positive": [
+        "1205",
+        0
+      ],
+      "negative": [
+        "1205",
+        0
+      ],
+      "latent_image": [
+        "634",
+        0
+      ]
+    },
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "KSampler"
+    }
+  },
+  "638": {
+    "inputs": {
+      "image": [
+        "213",
+        0
+      ]
+    },
+    "class_type": "FluxKontextImageScale",
+    "_meta": {
+      "title": "FluxKontextImageScale"
+    }
+  },
+  "640": {
+    "inputs": {
+      "samples": [
+        "637",
+        0
+      ],
+      "vae": [
+        "360",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "642": {
+    "inputs": {
+      "inputcount": 2,
+      "delimiter": " ",
+      "return_list": false,
+      "Update inputs": null,
+      "string_1": [
+        "646",
+        0
+      ],
+      "string_2": [
+        "515",
+        0
+      ]
+    },
+    "class_type": "JoinStringMulti",
+    "_meta": {
+      "title": "Join String Multi"
+    }
+  },
+  "645": {
+    "inputs": {
+      "filename_prefix": [
+        "917",
+        0
+      ],
+      "images": [
+        "640",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image"
+    }
+  },
+  "646": {
+    "inputs": {
+      "string": "Using the style of the image, put the character in a dark spooky castle at night and change the pose. The characters face is illuminated by dim candlelight, the character is scared. The strong moonlight creates a strong backlight creating a dramatic look. The moonlight is reflecting from the skin. ",
+      "strip_newlines": true
+    },
+    "class_type": "StringConstantMultiline",
+    "_meta": {
+      "title": "String Constant Multiline"
+    }
+  },
+  "652": {
+    "inputs": {
+      "seed": 1034973049061634,
+      "steps": [
+        "844",
+        0
+      ],
+      "cfg": [
+        "850",
+        0
+      ],
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "denoise": 1,
+      "model": [
+        "547",
+        0
+      ],
+      "positive": [
+        "1206",
+        0
+      ],
+      "negative": [
+        "1206",
+        0
+      ],
+      "latent_image": [
+        "538",
+        0
+      ]
+    },
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "KSampler"
+    }
+  },
+  "653": {
+    "inputs": {
+      "image": [
+        "213",
+        0
+      ]
+    },
+    "class_type": "FluxKontextImageScale",
+    "_meta": {
+      "title": "FluxKontextImageScale"
+    }
+  },
+  "655": {
+    "inputs": {
+      "samples": [
+        "652",
+        0
+      ],
+      "vae": [
+        "360",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "657": {
+    "inputs": {
+      "inputcount": 2,
+      "delimiter": " ",
+      "return_list": false,
+      "Update inputs": null,
+      "string_1": [
+        "661",
+        0
+      ],
+      "string_2": [
+        "515",
+        0
+      ]
+    },
+    "class_type": "JoinStringMulti",
+    "_meta": {
+      "title": "Join String Multi"
+    }
+  },
+  "660": {
+    "inputs": {
+      "filename_prefix": [
+        "918",
+        0
+      ],
+      "images": [
+        "655",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image"
+    }
+  },
+  "661": {
+    "inputs": {
+      "string": "A wide shot of the character sitting on a rock at the beach. Keep the characters clothes and style exactly the same. Keep the proportions and facial features exactly the same. ",
+      "strip_newlines": true
+    },
+    "class_type": "StringConstantMultiline",
+    "_meta": {
+      "title": "String Constant Multiline"
+    }
+  },
+  "686": {
+    "inputs": {
+      "filename_prefix": [
+        "923",
+        0
+      ],
+      "images": [
+        "690",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image"
+    }
+  },
+  "690": {
+    "inputs": {
+      "samples": [
+        "698",
+        0
+      ],
+      "vae": [
+        "360",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "693": {
+    "inputs": {
+      "image": [
+        "213",
+        0
+      ]
+    },
+    "class_type": "FluxKontextImageScale",
+    "_meta": {
+      "title": "FluxKontextImageScale"
+    }
+  },
+  "697": {
+    "inputs": {
+      "width": 1024,
+      "height": 1024,
+      "batch_size": 1
+    },
+    "class_type": "EmptySD3LatentImage",
+    "_meta": {
+      "title": "EmptySD3LatentImage"
+    }
+  },
+  "698": {
+    "inputs": {
+      "seed": 1034973049061638,
+      "steps": [
+        "844",
+        0
+      ],
+      "cfg": [
+        "850",
+        0
+      ],
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "denoise": 1,
+      "model": [
+        "547",
+        0
+      ],
+      "positive": [
+        "1215",
+        0
+      ],
+      "negative": [
+        "1215",
+        0
+      ],
+      "latent_image": [
+        "697",
+        0
+      ]
+    },
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "KSampler"
+    }
+  },
+  "699": {
+    "inputs": {
+      "filename_prefix": [
+        "924",
+        0
+      ],
+      "images": [
+        "703",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image"
+    }
+  },
+  "703": {
+    "inputs": {
+      "samples": [
+        "710",
+        0
+      ],
+      "vae": [
+        "360",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "706": {
+    "inputs": {
+      "image": [
+        "207",
+        0
+      ]
+    },
+    "class_type": "FluxKontextImageScale",
+    "_meta": {
+      "title": "FluxKontextImageScale"
+    }
+  },
+  "709": {
+    "inputs": {
+      "width": 1024,
+      "height": 1024,
+      "batch_size": 1
+    },
+    "class_type": "EmptySD3LatentImage",
+    "_meta": {
+      "title": "EmptySD3LatentImage"
+    }
+  },
+  "710": {
+    "inputs": {
+      "seed": 1034973049061638,
+      "steps": [
+        "844",
+        0
+      ],
+      "cfg": [
+        "850",
+        0
+      ],
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "denoise": 1,
+      "model": [
+        "547",
+        0
+      ],
+      "positive": [
+        "1218",
+        0
+      ],
+      "negative": [
+        "1218",
+        0
+      ],
+      "latent_image": [
+        "709",
+        0
+      ]
+    },
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "KSampler"
+    }
+  },
+  "727": {
+    "inputs": {
+      "filename_prefix": [
+        "925",
+        0
+      ],
+      "images": [
+        "731",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image"
+    }
+  },
+  "731": {
+    "inputs": {
+      "samples": [
+        "738",
+        0
+      ],
+      "vae": [
+        "360",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "734": {
+    "inputs": {
+      "image": [
+        "207",
+        0
+      ]
+    },
+    "class_type": "FluxKontextImageScale",
+    "_meta": {
+      "title": "FluxKontextImageScale"
+    }
+  },
+  "737": {
+    "inputs": {
+      "width": 1024,
+      "height": 1024,
+      "batch_size": 1
+    },
+    "class_type": "EmptySD3LatentImage",
+    "_meta": {
+      "title": "EmptySD3LatentImage"
+    }
+  },
+  "738": {
+    "inputs": {
+      "seed": 1034973049061639,
+      "steps": [
+        "844",
+        0
+      ],
+      "cfg": [
+        "850",
+        0
+      ],
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "denoise": 1,
+      "model": [
+        "547",
+        0
+      ],
+      "positive": [
+        "1220",
+        0
+      ],
+      "negative": [
+        "1220",
+        0
+      ],
+      "latent_image": [
+        "737",
+        0
+      ]
+    },
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "KSampler"
+    }
+  },
+  "756": {
+    "inputs": {
+      "filename_prefix": [
+        "922",
+        0
+      ],
+      "images": [
+        "760",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image"
+    }
+  },
+  "760": {
+    "inputs": {
+      "samples": [
+        "768",
+        0
+      ],
+      "vae": [
+        "360",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "763": {
+    "inputs": {
+      "image": [
+        "207",
+        0
+      ]
+    },
+    "class_type": "FluxKontextImageScale",
+    "_meta": {
+      "title": "FluxKontextImageScale"
+    }
+  },
+  "767": {
+    "inputs": {
+      "width": 1024,
+      "height": 1024,
+      "batch_size": 1
+    },
+    "class_type": "EmptySD3LatentImage",
+    "_meta": {
+      "title": "EmptySD3LatentImage"
+    }
+  },
+  "768": {
+    "inputs": {
+      "seed": 1034973049061639,
+      "steps": [
+        "844",
+        0
+      ],
+      "cfg": [
+        "850",
+        0
+      ],
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "denoise": 1,
+      "model": [
+        "547",
+        0
+      ],
+      "positive": [
+        "1213",
+        0
+      ],
+      "negative": [
+        "1213",
+        0
+      ],
+      "latent_image": [
+        "767",
+        0
+      ]
+    },
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "KSampler"
+    }
+  },
+  "819": {
+    "inputs": {
+      "ckpt_name": "flux\\flux1-dev-fp8.safetensors"
+    },
+    "class_type": "CheckpointLoaderSimple",
+    "_meta": {
+      "title": "Load Checkpoint"
+    }
+  },
+  "844": {
+    "inputs": {
+      "value": 4
+    },
+    "class_type": "PrimitiveInt",
+    "_meta": {
+      "title": "STEPS"
+    }
+  },
+  "850": {
+    "inputs": {
+      "value": 1
+    },
+    "class_type": "PrimitiveFloat",
+    "_meta": {
+      "title": "CFG"
+    }
+  },
+  "891": {
+    "inputs": {
+      "filename_prefix": [
+        "994",
+        0
+      ],
+      "images": [
+        "894",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image"
+    }
+  },
+  "894": {
+    "inputs": {
+      "samples": [
+        "902",
+        0
+      ],
+      "vae": [
+        "360",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "897": {
+    "inputs": {
+      "image": [
+        "907",
+        0
+      ]
+    },
+    "class_type": "FluxKontextImageScale",
+    "_meta": {
+      "title": "FluxKontextImageScale"
+    }
+  },
+  "901": {
+    "inputs": {
+      "width": 1024,
+      "height": 1024,
+      "batch_size": 1
+    },
+    "class_type": "EmptySD3LatentImage",
+    "_meta": {
+      "title": "EmptySD3LatentImage"
+    }
+  },
+  "902": {
+    "inputs": {
+      "seed": 1034973049061640,
+      "steps": [
+        "844",
+        0
+      ],
+      "cfg": [
+        "850",
+        0
+      ],
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "denoise": 1,
+      "model": [
+        "547",
+        0
+      ],
+      "positive": [
+        "1222",
+        0
+      ],
+      "negative": [
+        "1222",
+        0
+      ],
+      "latent_image": [
+        "901",
+        0
+      ]
+    },
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "KSampler"
+    }
+  },
+  "907": {
+    "inputs": {
+      "image": "editorial_fashion_photography_of_a_stylish_dark_grey_autumn_coat_in_front_of_a_white_background_fro_6ri6g6js7bt3fke9cmqa_1.jpg"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load Image"
+    }
+  },
+  "911": {
+    "inputs": {
+      "inputcount": 2,
+      "delimiter": "/",
+      "return_list": false,
+      "Update inputs": null,
+      "string_1": [
+        "588",
+        0
+      ],
+      "string_2": [
+        "588",
+        0
+      ]
+    },
+    "class_type": "JoinStringMulti",
+    "_meta": {
+      "title": "Join String Multi"
+    }
+  },
+  "913": {
+    "inputs": {
+      "inputcount": 2,
+      "delimiter": "/",
+      "return_list": false,
+      "Update inputs": null,
+      "string_1": [
+        "588",
+        0
+      ],
+      "string_2": [
+        "588",
+        0
+      ]
+    },
+    "class_type": "JoinStringMulti",
+    "_meta": {
+      "title": "Join String Multi"
+    }
+  },
+  "914": {
+    "inputs": {
+      "inputcount": 2,
+      "delimiter": "/",
+      "return_list": false,
+      "Update inputs": null,
+      "string_1": [
+        "588",
+        0
+      ],
+      "string_2": [
+        "588",
+        0
+      ]
+    },
+    "class_type": "JoinStringMulti",
+    "_meta": {
+      "title": "Join String Multi"
+    }
+  },
+  "915": {
+    "inputs": {
+      "inputcount": 2,
+      "delimiter": "/",
+      "return_list": false,
+      "Update inputs": null,
+      "string_1": [
+        "588",
+        0
+      ],
+      "string_2": [
+        "588",
+        0
+      ]
+    },
+    "class_type": "JoinStringMulti",
+    "_meta": {
+      "title": "Join String Multi"
+    }
+  },
+  "917": {
+    "inputs": {
+      "inputcount": 2,
+      "delimiter": "/",
+      "return_list": false,
+      "Update inputs": null,
+      "string_1": [
+        "588",
+        0
+      ],
+      "string_2": [
+        "588",
+        0
+      ]
+    },
+    "class_type": "JoinStringMulti",
+    "_meta": {
+      "title": "Join String Multi"
+    }
+  },
+  "918": {
+    "inputs": {
+      "inputcount": 2,
+      "delimiter": "/",
+      "return_list": false,
+      "Update inputs": null,
+      "string_1": [
+        "588",
+        0
+      ],
+      "string_2": [
+        "588",
+        0
+      ]
+    },
+    "class_type": "JoinStringMulti",
+    "_meta": {
+      "title": "Join String Multi"
+    }
+  },
+  "919": {
+    "inputs": {
+      "inputcount": 2,
+      "delimiter": "/",
+      "return_list": false,
+      "Update inputs": null,
+      "string_1": [
+        "588",
+        0
+      ],
+      "string_2": [
+        "588",
+        0
+      ]
+    },
+    "class_type": "JoinStringMulti",
+    "_meta": {
+      "title": "Join String Multi"
+    }
+  },
+  "921": {
+    "inputs": {
+      "inputcount": 2,
+      "delimiter": "/",
+      "return_list": false,
+      "Update inputs": null,
+      "string_1": [
+        "588",
+        0
+      ],
+      "string_2": [
+        "588",
+        0
+      ]
+    },
+    "class_type": "JoinStringMulti",
+    "_meta": {
+      "title": "Join String Multi"
+    }
+  },
+  "922": {
+    "inputs": {
+      "inputcount": 2,
+      "delimiter": "/",
+      "return_list": false,
+      "Update inputs": null,
+      "string_1": [
+        "588",
+        0
+      ],
+      "string_2": [
+        "588",
+        0
+      ]
+    },
+    "class_type": "JoinStringMulti",
+    "_meta": {
+      "title": "Join String Multi"
+    }
+  },
+  "923": {
+    "inputs": {
+      "inputcount": 2,
+      "delimiter": "/",
+      "return_list": false,
+      "Update inputs": null,
+      "string_1": [
+        "588",
+        0
+      ],
+      "string_2": [
+        "588",
+        0
+      ]
+    },
+    "class_type": "JoinStringMulti",
+    "_meta": {
+      "title": "Join String Multi"
+    }
+  },
+  "924": {
+    "inputs": {
+      "inputcount": 2,
+      "delimiter": "/",
+      "return_list": false,
+      "Update inputs": null,
+      "string_1": [
+        "588",
+        0
+      ],
+      "string_2": [
+        "588",
+        0
+      ]
+    },
+    "class_type": "JoinStringMulti",
+    "_meta": {
+      "title": "Join String Multi"
+    }
+  },
+  "925": {
+    "inputs": {
+      "inputcount": 2,
+      "delimiter": "/",
+      "return_list": false,
+      "Update inputs": null,
+      "string_1": [
+        "588",
+        0
+      ],
+      "string_2": [
+        "588",
+        0
+      ]
+    },
+    "class_type": "JoinStringMulti",
+    "_meta": {
+      "title": "Join String Multi"
+    }
+  },
+  "942": {
+    "inputs": {
+      "inputcount": 2,
+      "delimiter": "/",
+      "return_list": false,
+      "Update inputs": null,
+      "string_1": [
+        "588",
+        0
+      ],
+      "string_2": [
+        "588",
+        0
+      ]
+    },
+    "class_type": "JoinStringMulti",
+    "_meta": {
+      "title": "Join String Multi"
+    }
+  },
+  "943": {
+    "inputs": {
+      "value": 2048
+    },
+    "class_type": "PrimitiveInt",
+    "_meta": {
+      "title": "Int"
+    }
+  },
+  "946": {
+    "inputs": {
+      "model": "gokaygokay/Florence-2-Flux-Large",
+      "precision": "fp16",
+      "attention": "sdpa",
+      "convert_to_safetensors": false
+    },
+    "class_type": "DownloadAndLoadFlorence2Model",
+    "_meta": {
+      "title": "DownloadAndLoadFlorence2Model"
+    }
+  },
+  "994": {
+    "inputs": {
+      "inputcount": 2,
+      "delimiter": "/",
+      "return_list": false,
+      "Update inputs": null,
+      "string_1": [
+        "588",
+        0
+      ],
+      "string_2": [
+        "588",
+        0
+      ]
+    },
+    "class_type": "JoinStringMulti",
+    "_meta": {
+      "title": "Join String Multi"
+    }
+  },
+  "997": {
+    "inputs": {
+      "filename_prefix": [
+        "998",
+        0
+      ],
+      "images": [
+        "213",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image"
+    }
+  },
+  "998": {
+    "inputs": {
+      "inputcount": 2,
+      "delimiter": "/",
+      "return_list": false,
+      "Update inputs": null,
+      "string_1": [
+        "588",
+        0
+      ],
+      "string_2": [
+        "588",
+        0
+      ]
+    },
+    "class_type": "JoinStringMulti",
+    "_meta": {
+      "title": "Join String Multi"
+    }
+  },
+  "1114": {
+    "inputs": {
+      "strength": 1,
+      "model": [
+        "1115",
+        0
+      ]
+    },
+    "class_type": "CFGNorm",
+    "_meta": {
+      "title": "CFGNorm"
+    }
+  },
+  "1115": {
+    "inputs": {
+      "shift": 3,
+      "model": [
+        "546",
+        0
+      ]
+    },
+    "class_type": "ModelSamplingAuraFlow",
+    "_meta": {
+      "title": "ModelSamplingAuraFlow"
+    }
+  },
+  "1117": {
+    "inputs": {
+      "filename_prefix": [
+        "1128",
+        0
+      ],
+      "images": [
+        "1122",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image"
+    }
+  },
+  "1121": {
+    "inputs": {
+      "image": [
+        "213",
+        0
+      ]
+    },
+    "class_type": "FluxKontextImageScale",
+    "_meta": {
+      "title": "FluxKontextImageScale"
+    }
+  },
+  "1122": {
+    "inputs": {
+      "samples": [
+        "1127",
+        0
+      ],
+      "vae": [
+        "360",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "1125": {
+    "inputs": {
+      "width": 1024,
+      "height": 1024,
+      "batch_size": 1
+    },
+    "class_type": "EmptySD3LatentImage",
+    "_meta": {
+      "title": "EmptySD3LatentImage"
+    }
+  },
+  "1127": {
+    "inputs": {
+      "seed": 1034973049061637,
+      "steps": [
+        "844",
+        0
+      ],
+      "cfg": [
+        "850",
+        0
+      ],
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "denoise": 1,
+      "model": [
+        "547",
+        0
+      ],
+      "positive": [
+        "1225",
+        0
+      ],
+      "negative": [
+        "1225",
+        0
+      ],
+      "latent_image": [
+        "1125",
+        0
+      ]
+    },
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "KSampler"
+    }
+  },
+  "1128": {
+    "inputs": {
+      "inputcount": 2,
+      "delimiter": "/",
+      "return_list": false,
+      "Update inputs": null,
+      "string_1": [
+        "588",
+        0
+      ],
+      "string_2": [
+        "588",
+        0
+      ]
+    },
+    "class_type": "JoinStringMulti",
+    "_meta": {
+      "title": "Join String Multi"
+    }
+  },
+  "1156": {
+    "inputs": {
+      "lora_name": "uso-flux1-dit-lora-v1.safetensors",
+      "strength_model": 0.9,
+      "model": [
+        "819",
+        0
+      ]
+    },
+    "class_type": "LoraLoaderModelOnly",
+    "_meta": {
+      "title": "LoraLoaderModelOnly"
+    }
+  },
+  "1174": {
+    "inputs": {
+      "model_name": "4x-UltraSharp.pth"
+    },
+    "class_type": "UpscaleModelLoader",
+    "_meta": {
+      "title": "Load Upscale Model"
+    }
+  },
+  "1195": {
+    "inputs": {
+      "name": "uso-flux1-projector-v1.safetensors"
+    },
+    "class_type": "ModelPatchLoader",
+    "_meta": {
+      "title": "ModelPatchLoader"
+    }
+  },
+  "1196": {
+    "inputs": {
+      "clip_name": "sigclip_vision_patch14_384.safetensors"
+    },
+    "class_type": "CLIPVisionLoader",
+    "_meta": {
+      "title": "Load CLIP Vision"
+    }
+  },
+  "1199": {
+    "inputs": {
+      "prompt": [
+        "513",
+        0
+      ],
+      "clip": [
+        "362",
+        0
+      ],
+      "vae": [
+        "360",
+        0
+      ],
+      "image1": [
+        "1200",
+        0
+      ]
+    },
+    "class_type": "TextEncodeQwenImageEditPlus",
+    "_meta": {
+      "title": "TextEncodeQwenImageEditPlus"
+    }
+  },
+  "1200": {
+    "inputs": {
+      "image": [
+        "213",
+        0
+      ]
+    },
+    "class_type": "FluxKontextImageScale",
+    "_meta": {
+      "title": "FluxKontextImageScale"
+    }
+  },
+  "1201": {
+    "inputs": {
+      "prompt": [
+        "592",
+        0
+      ],
+      "clip": [
+        "362",
+        0
+      ],
+      "vae": [
+        "360",
+        0
+      ],
+      "image1": [
+        "374",
+        0
+      ]
+    },
+    "class_type": "TextEncodeQwenImageEditPlus",
+    "_meta": {
+      "title": "TextEncodeQwenImageEditPlus"
+    }
+  },
+  "1202": {
+    "inputs": {
+      "prompt": [
+        "596",
+        0
+      ],
+      "clip": [
+        "362",
+        0
+      ],
+      "vae": [
+        "360",
+        0
+      ],
+      "image1": [
+        "430",
+        0
+      ]
+    },
+    "class_type": "TextEncodeQwenImageEditPlus",
+    "_meta": {
+      "title": "TextEncodeQwenImageEditPlus"
+    }
+  },
+  "1203": {
+    "inputs": {
+      "prompt": [
+        "613",
+        0
+      ],
+      "clip": [
+        "362",
+        0
+      ],
+      "vae": [
+        "360",
+        0
+      ],
+      "image1": [
+        "609",
+        0
+      ]
+    },
+    "class_type": "TextEncodeQwenImageEditPlus",
+    "_meta": {
+      "title": "TextEncodeQwenImageEditPlus"
+    }
+  },
+  "1205": {
+    "inputs": {
+      "prompt": [
+        "646",
+        0
+      ],
+      "clip": [
+        "362",
+        0
+      ],
+      "vae": [
+        "360",
+        0
+      ],
+      "image1": [
+        "638",
+        0
+      ]
+    },
+    "class_type": "TextEncodeQwenImageEditPlus",
+    "_meta": {
+      "title": "TextEncodeQwenImageEditPlus"
+    }
+  },
+  "1206": {
+    "inputs": {
+      "prompt": [
+        "657",
+        0
+      ],
+      "clip": [
+        "362",
+        0
+      ],
+      "vae": [
+        "360",
+        0
+      ],
+      "image1": [
+        "653",
+        0
+      ],
+      "image2": [
+        "1207",
+        0
+      ]
+    },
+    "class_type": "TextEncodeQwenImageEditPlus",
+    "_meta": {
+      "title": "TextEncodeQwenImageEditPlus"
+    }
+  },
+  "1207": {
+    "inputs": {
+      "image": [
+        "207",
+        0
+      ]
+    },
+    "class_type": "FluxKontextImageScale",
+    "_meta": {
+      "title": "FluxKontextImageScale"
+    }
+  },
+  "1208": {
+    "inputs": {
+      "prompt": "Using the style of the image, make this character sit in a park on a sunny day. The character is looking up into the sky, low angle shot. Keep the proportions and facial features exactly the same. ",
+      "clip": [
+        "362",
+        0
+      ],
+      "vae": [
+        "360",
+        0
+      ],
+      "image1": [
+        "460",
+        0
+      ]
+    },
+    "class_type": "TextEncodeQwenImageEditPlus",
+    "_meta": {
+      "title": "TextEncodeQwenImageEditPlus"
+    }
+  },
+  "1210": {
+    "inputs": {
+      "prompt": "Put the character in a neutral t-pose. A full body standing with arms outstretched. In front of a white background.",
+      "clip": [
+        "362",
+        0
+      ],
+      "vae": [
+        "360",
+        0
+      ],
+      "image1": [
+        "471",
+        0
+      ],
+      "image2": [
+        "1211",
+        0
+      ],
+      "image3": [
+        "1212",
+        0
+      ]
+    },
+    "class_type": "TextEncodeQwenImageEditPlus",
+    "_meta": {
+      "title": "TextEncodeQwenImageEditPlus"
+    }
+  },
+  "1211": {
+    "inputs": {
+      "image": [
+        "213",
+        0
+      ]
+    },
+    "class_type": "FluxKontextImageScale",
+    "_meta": {
+      "title": "FluxKontextImageScale"
+    }
+  },
+  "1212": {
+    "inputs": {
+      "image": [
+        "369",
+        0
+      ]
+    },
+    "class_type": "FluxKontextImageScale",
+    "_meta": {
+      "title": "FluxKontextImageScale"
+    }
+  },
+  "1213": {
+    "inputs": {
+      "prompt": "Make the character lay on the ground in a relaxed model pose. White background. Keep the clothes and style exactly the same.",
+      "clip": [
+        "362",
+        0
+      ],
+      "vae": [
+        "360",
+        0
+      ],
+      "image1": [
+        "1265",
+        0
+      ],
+      "image2": [
+        "763",
+        0
+      ]
+    },
+    "class_type": "TextEncodeQwenImageEditPlus",
+    "_meta": {
+      "title": "TextEncodeQwenImageEditPlus"
+    }
+  },
+  "1214": {
+    "inputs": {
+      "image": [
+        "213",
+        0
+      ]
+    },
+    "class_type": "FluxKontextImageScale",
+    "_meta": {
+      "title": "FluxKontextImageScale"
+    }
+  },
+  "1215": {
+    "inputs": {
+      "prompt": "Put the character in a neutral t-pose. A full body side view looking at a profile view of the character standing with arms outstretched. In front of a white background.",
+      "clip": [
+        "362",
+        0
+      ],
+      "vae": [
+        "360",
+        0
+      ],
+      "image1": [
+        "693",
+        0
+      ],
+      "image2": [
+        "1216",
+        0
+      ],
+      "image3": [
+        "1217",
+        0
+      ]
+    },
+    "class_type": "TextEncodeQwenImageEditPlus",
+    "_meta": {
+      "title": "TextEncodeQwenImageEditPlus"
+    }
+  },
+  "1216": {
+    "inputs": {
+      "image": [
+        "207",
+        0
+      ]
+    },
+    "class_type": "FluxKontextImageScale",
+    "_meta": {
+      "title": "FluxKontextImageScale"
+    }
+  },
+  "1217": {
+    "inputs": {
+      "image": [
+        "213",
+        0
+      ]
+    },
+    "class_type": "FluxKontextImageScale",
+    "_meta": {
+      "title": "FluxKontextImageScale"
+    }
+  },
+  "1218": {
+    "inputs": {
+      "prompt": "Put the character in a neutral t-pose. A full body back view of the character standing with arms outstretched. In front of a white background.",
+      "clip": [
+        "362",
+        0
+      ],
+      "vae": [
+        "360",
+        0
+      ],
+      "image1": [
+        "706",
+        0
+      ],
+      "image2": [
+        "1219",
+        0
+      ]
+    },
+    "class_type": "TextEncodeQwenImageEditPlus",
+    "_meta": {
+      "title": "TextEncodeQwenImageEditPlus"
+    }
+  },
+  "1219": {
+    "inputs": {
+      "image": [
+        "213",
+        0
+      ]
+    },
+    "class_type": "FluxKontextImageScale",
+    "_meta": {
+      "title": "FluxKontextImageScale"
+    }
+  },
+  "1220": {
+    "inputs": {
+      "prompt": "Put the character in a full-body side view walking in a cinematic landscape with soft lighting. Keep the proportions and style exactly the same. ",
+      "clip": [
+        "362",
+        0
+      ],
+      "vae": [
+        "360",
+        0
+      ],
+      "image1": [
+        "734",
+        0
+      ],
+      "image2": [
+        "1221",
+        0
+      ]
+    },
+    "class_type": "TextEncodeQwenImageEditPlus",
+    "_meta": {
+      "title": "TextEncodeQwenImageEditPlus"
+    }
+  },
+  "1221": {
+    "inputs": {
+      "image": [
+        "207",
+        0
+      ]
+    },
+    "class_type": "FluxKontextImageScale",
+    "_meta": {
+      "title": "FluxKontextImageScale"
+    }
+  },
+  "1222": {
+    "inputs": {
+      "prompt": "Keep the character and facial features exactly the same. The person is in front of a white backgound. Make the character wear the grey winter coat.",
+      "clip": [
+        "362",
+        0
+      ],
+      "vae": [
+        "360",
+        0
+      ],
+      "image1": [
+        "897",
+        0
+      ],
+      "image2": [
+        "1223",
+        0
+      ],
+      "image3": [
+        "1224",
+        0
+      ]
+    },
+    "class_type": "TextEncodeQwenImageEditPlus",
+    "_meta": {
+      "title": "TextEncodeQwenImageEditPlus"
+    }
+  },
+  "1223": {
+    "inputs": {
+      "image": [
+        "213",
+        0
+      ]
+    },
+    "class_type": "FluxKontextImageScale",
+    "_meta": {
+      "title": "FluxKontextImageScale"
+    }
+  },
+  "1224": {
+    "inputs": {
+      "image": [
+        "473",
+        0
+      ]
+    },
+    "class_type": "FluxKontextImageScale",
+    "_meta": {
+      "title": "FluxKontextImageScale"
+    }
+  },
+  "1225": {
+    "inputs": {
+      "prompt": "Place this figure in a cozy café. Keep the proportions and facial features exactly the same.  Keep the characters clothes and style exactly the same.",
+      "clip": [
+        "362",
+        0
+      ],
+      "vae": [
+        "360",
+        0
+      ],
+      "image1": [
+        "1121",
+        0
+      ],
+      "image2": [
+        "1226",
+        0
+      ]
+    },
+    "class_type": "TextEncodeQwenImageEditPlus",
+    "_meta": {
+      "title": "TextEncodeQwenImageEditPlus"
+    }
+  },
+  "1226": {
+    "inputs": {
+      "image": [
+        "207",
+        0
+      ]
+    },
+    "class_type": "FluxKontextImageScale",
+    "_meta": {
+      "title": "FluxKontextImageScale"
+    }
+  },
+  "1228": {
+    "inputs": {
+      "inputcount": 2,
+      "delimiter": "/",
+      "return_list": false,
+      "Update inputs": null,
+      "string_1": [
+        "588",
+        0
+      ],
+      "string_2": [
+        "588",
+        0
+      ]
+    },
+    "class_type": "JoinStringMulti",
+    "_meta": {
+      "title": "Join String Multi"
+    }
+  },
+  "1232": {
+    "inputs": {
+      "seed": 1034973049061640,
+      "steps": [
+        "844",
+        0
+      ],
+      "cfg": [
+        "850",
+        0
+      ],
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "denoise": 1,
+      "model": [
+        "547",
+        0
+      ],
+      "positive": [
+        "1245",
+        0
+      ],
+      "negative": [
+        "1245",
+        0
+      ],
+      "latent_image": [
+        "1233",
+        0
+      ]
+    },
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "KSampler"
+    }
+  },
+  "1233": {
+    "inputs": {
+      "width": 1024,
+      "height": 1024,
+      "batch_size": 1
+    },
+    "class_type": "EmptySD3LatentImage",
+    "_meta": {
+      "title": "EmptySD3LatentImage"
+    }
+  },
+  "1234": {
+    "inputs": {
+      "filename_prefix": [
+        "1228",
+        0
+      ],
+      "images": [
+        "1235",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image"
+    }
+  },
+  "1235": {
+    "inputs": {
+      "samples": [
+        "1232",
+        0
+      ],
+      "vae": [
+        "360",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "1238": {
+    "inputs": {
+      "image": "pexels-godisable-jacob-226636-871495.jpg"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load Image"
+    }
+  },
+  "1239": {
+    "inputs": {
+      "image": [
+        "1246",
+        0
+      ]
+    },
+    "class_type": "FluxKontextImageScale",
+    "_meta": {
+      "title": "FluxKontextImageScale"
+    }
+  },
+  "1241": {
+    "inputs": {
+      "image": [
+        "473",
+        0
+      ]
+    },
+    "class_type": "FluxKontextImageScale",
+    "_meta": {
+      "title": "FluxKontextImageScale"
+    }
+  },
+  "1245": {
+    "inputs": {
+      "prompt": "Change the pose of the character. Keep the character and facial features exactly the same",
+      "clip": [
+        "362",
+        0
+      ],
+      "vae": [
+        "360",
+        0
+      ],
+      "image1": [
+        "1241",
+        0
+      ],
+      "image2": [
+        "1239",
+        0
+      ]
+    },
+    "class_type": "TextEncodeQwenImageEditPlus",
+    "_meta": {
+      "title": "TextEncodeQwenImageEditPlus"
+    }
+  },
+  "1246": {
+    "inputs": {
+      "detect_hand": "enable",
+      "detect_body": "enable",
+      "detect_face": "enable",
+      "resolution": 512,
+      "bbox_detector": "yolox_l.onnx",
+      "pose_estimator": "dw-ll_ucoco_384_bs5.torchscript.pt",
+      "scale_stick_for_xinsr_cn": "disable",
+      "image": [
+        "1238",
+        0
+      ]
+    },
+    "class_type": "DWPreprocessor",
+    "_meta": {
+      "title": "DWPose Estimator"
+    }
+  },
+  "1247": {
+    "inputs": {
+      "images": [
+        "1246",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image"
+    }
+  },
+  "1248": {
+    "inputs": {
+      "filename_prefix": [
+        "1256",
+        0
+      ],
+      "images": [
+        "1250",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image"
+    }
+  },
+  "1250": {
+    "inputs": {
+      "samples": [
+        "1253",
+        0
+      ],
+      "vae": [
+        "360",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "1252": {
+    "inputs": {
+      "width": 1024,
+      "height": 1024,
+      "batch_size": 1
+    },
+    "class_type": "EmptySD3LatentImage",
+    "_meta": {
+      "title": "EmptySD3LatentImage"
+    }
+  },
+  "1253": {
+    "inputs": {
+      "seed": 1034973049061637,
+      "steps": [
+        "844",
+        0
+      ],
+      "cfg": [
+        "850",
+        0
+      ],
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "denoise": 1,
+      "model": [
+        "547",
+        0
+      ],
+      "positive": [
+        "1261",
+        0
+      ],
+      "negative": [
+        "1261",
+        0
+      ],
+      "latent_image": [
+        "1252",
+        0
+      ]
+    },
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "KSampler"
+    }
+  },
+  "1256": {
+    "inputs": {
+      "inputcount": 2,
+      "delimiter": "/",
+      "return_list": false,
+      "Update inputs": null,
+      "string_1": [
+        "588",
+        0
+      ],
+      "string_2": [
+        "588",
+        0
+      ]
+    },
+    "class_type": "JoinStringMulti",
+    "_meta": {
+      "title": "Join String Multi"
+    }
+  },
+  "1258": {
+    "inputs": {
+      "image": [
+        "213",
+        0
+      ]
+    },
+    "class_type": "FluxKontextImageScale",
+    "_meta": {
+      "title": "FluxKontextImageScale"
+    }
+  },
+  "1261": {
+    "inputs": {
+      "prompt": "Using the style of the image, put this character in a tropical rainforest during sunset holding a tropical cocktail in their hand. The sunlight illuminates the smiling face. The character is happy. Keep the facial features exactly the same. ",
+      "clip": [
+        "362",
+        0
+      ],
+      "vae": [
+        "360",
+        0
+      ],
+      "image1": [
+        "1258",
+        0
+      ]
+    },
+    "class_type": "TextEncodeQwenImageEditPlus",
+    "_meta": {
+      "title": "TextEncodeQwenImageEditPlus"
+    }
+  },
+  "1265": {
+    "inputs": {
+      "image": [
+        "213",
+        0
+      ]
+    },
+    "class_type": "FluxKontextImageScale",
+    "_meta": {
+      "title": "FluxKontextImageScale"
+    }
+  },
+  "1298": {
+    "inputs": {
+      "filename_prefix": [
+        "1312",
+        0
+      ],
+      "images": [
+        "1299",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image"
+    }
+  },
+  "1299": {
+    "inputs": {
+      "samples": [
+        "1302",
+        0
+      ],
+      "vae": [
+        "360",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "1300": {
+    "inputs": {
+      "width": 1024,
+      "height": 1024,
+      "batch_size": 1
+    },
+    "class_type": "EmptySD3LatentImage",
+    "_meta": {
+      "title": "EmptySD3LatentImage"
+    }
+  },
+  "1302": {
+    "inputs": {
+      "seed": 1034973049061637,
+      "steps": [
+        "844",
+        0
+      ],
+      "cfg": [
+        "850",
+        0
+      ],
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "denoise": 1,
+      "model": [
+        "547",
+        0
+      ],
+      "positive": [
+        "1303",
+        0
+      ],
+      "negative": [
+        "1303",
+        0
+      ],
+      "latent_image": [
+        "1300",
+        0
+      ]
+    },
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "KSampler"
+    }
+  },
+  "1303": {
+    "inputs": {
+      "prompt": "Place this person in a subway train, she is holding a brown bag. Keep the characters clothes and style exactly the same.",
+      "clip": [
+        "362",
+        0
+      ],
+      "vae": [
+        "360",
+        0
+      ],
+      "image1": [
+        "1307",
+        0
+      ],
+      "image2": [
+        "1308",
+        0
+      ]
+    },
+    "class_type": "TextEncodeQwenImageEditPlus",
+    "_meta": {
+      "title": "TextEncodeQwenImageEditPlus"
+    }
+  },
+  "1307": {
+    "inputs": {
+      "image": [
+        "213",
+        0
+      ]
+    },
+    "class_type": "FluxKontextImageScale",
+    "_meta": {
+      "title": "FluxKontextImageScale"
+    }
+  },
+  "1308": {
+    "inputs": {
+      "image": [
+        "207",
+        0
+      ]
+    },
+    "class_type": "FluxKontextImageScale",
+    "_meta": {
+      "title": "FluxKontextImageScale"
+    }
+  },
+  "1312": {
+    "inputs": {
+      "inputcount": 2,
+      "delimiter": "/",
+      "return_list": false,
+      "Update inputs": null,
+      "string_1": [
+        "588",
+        0
+      ],
+      "string_2": [
+        "588",
+        0
+      ]
+    },
+    "class_type": "JoinStringMulti",
+    "_meta": {
+      "title": "Join String Multi"
+    }
+  },
+  "1319": {
+    "inputs": {
+      "model_name": "bbox/face_yolov8m.pt"
+    },
+    "class_type": "UltralyticsDetectorProvider",
+    "_meta": {
+      "title": "UltralyticsDetectorProvider"
+    }
+  },
+  "1324": {
+    "inputs": {
+      "inputcount": 2,
+      "delimiter": "/",
+      "return_list": false,
+      "Update inputs": null,
+      "string_1": [
+        "588",
+        0
+      ],
+      "string_2": [
+        "588",
+        0
+      ]
+    },
+    "class_type": "JoinStringMulti",
+    "_meta": {
+      "title": "Join String Multi"
+    }
+  },
+  "1328": {
+    "inputs": {
+      "seed": 1034973049061640,
+      "steps": [
+        "844",
+        0
+      ],
+      "cfg": [
+        "850",
+        0
+      ],
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "denoise": 1,
+      "model": [
+        "547",
+        0
+      ],
+      "positive": [
+        "1340",
+        0
+      ],
+      "negative": [
+        "1340",
+        0
+      ],
+      "latent_image": [
+        "1329",
+        0
+      ]
+    },
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "KSampler"
+    }
+  },
+  "1329": {
+    "inputs": {
+      "width": 1024,
+      "height": 1024,
+      "batch_size": 1
+    },
+    "class_type": "EmptySD3LatentImage",
+    "_meta": {
+      "title": "EmptySD3LatentImage"
+    }
+  },
+  "1330": {
+    "inputs": {
+      "filename_prefix": [
+        "1324",
+        0
+      ],
+      "images": [
+        "1331",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image"
+    }
+  },
+  "1331": {
+    "inputs": {
+      "samples": [
+        "1328",
+        0
+      ],
+      "vae": [
+        "360",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "1335": {
+    "inputs": {
+      "image": [
+        "1341",
+        0
+      ]
+    },
+    "class_type": "FluxKontextImageScale",
+    "_meta": {
+      "title": "FluxKontextImageScale"
+    }
+  },
+  "1339": {
+    "inputs": {
+      "image": [
+        "473",
+        0
+      ]
+    },
+    "class_type": "FluxKontextImageScale",
+    "_meta": {
+      "title": "FluxKontextImageScale"
+    }
+  },
+  "1340": {
+    "inputs": {
+      "prompt": "Change the pose of the character. Keep the character and facial features exactly the same. In front of a clean white background.",
+      "clip": [
+        "362",
+        0
+      ],
+      "vae": [
+        "360",
+        0
+      ],
+      "image1": [
+        "1339",
+        0
+      ],
+      "image2": [
+        "1335",
+        0
+      ],
+      "image3": [
+        "1343",
+        0
+      ]
+    },
+    "class_type": "TextEncodeQwenImageEditPlus",
+    "_meta": {
+      "title": "TextEncodeQwenImageEditPlus"
+    }
+  },
+  "1341": {
+    "inputs": {
+      "image": "Pose_sheet_v02(1).png"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load Image"
+    }
+  },
+  "1343": {
+    "inputs": {
+      "image": [
+        "213",
+        0
+      ]
+    },
+    "class_type": "FluxKontextImageScale",
+    "_meta": {
+      "title": "FluxKontextImageScale"
+    }
+  }
+}
