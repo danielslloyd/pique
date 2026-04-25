@@ -6,7 +6,8 @@ class AppRouter {
             library: new LibraryController(),
             player: new PlayerController(),
             creator: new CreatorController(),
-            generator: new GeneratorController()
+            generator: new GeneratorController(),
+            beta: new BetaController()
         };
     }
 
@@ -39,6 +40,9 @@ class AppRouter {
             } else if (view === 'generator') {
                 const container = document.getElementById('app-container');
                 await viewController.init(container);
+            } else if (view === 'beta') {
+                const container = document.getElementById('app-container');
+                await viewController.init(container);
             } else {
                 await viewController.render(data);
             }
@@ -69,6 +73,9 @@ class AppRouter {
                 break;
             case 'generator':
                 document.title = 'Image Generator - Pique';
+                break;
+            case 'beta':
+                document.title = 'Character Studio (Beta) - Pique';
                 break;
             default:
                 document.title = 'Reading Library';

@@ -36,6 +36,10 @@ class ReadingApp {
         this.router.navigateTo('generator');
     }
 
+    showBetaCharacterStudio() {
+        this.router.navigateTo('beta');
+    }
+
     selectCreationMode(mode) {
         this.router.navigateTo('creator', mode);
     }
