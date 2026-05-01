@@ -46,6 +46,7 @@ class LibraryView {
                     <button onclick="document.getElementById('book-file-input').click()" class="add-book-btn">📁 Load .rbook File</button>
                     <button onclick="window.app.showBookCreator()" class="add-book-btn">➕ Create New Book</button>
                     <button onclick="window.app.showImageGenerator()" class="add-book-btn">🎨 Image Generator</button>
+                    <button onclick="window.app.showBetaCharacterStudio()" class="add-book-btn beta-launch-btn">✨ Character Studio <span class="beta-tag">BETA</span></button>
                 </div>
             </div>`;
     }
