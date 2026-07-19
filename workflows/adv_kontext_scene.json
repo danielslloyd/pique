@@ -1,0 +1,88 @@
+{
+  "1": {
+    "inputs": {
+      "unet_name": "flux1-dev-kontext_fp8_scaled.safetensors",
+      "weight_dtype": "default"
+    },
+    "class_type": "UNETLoader",
+    "_meta": { "title": "Load Kontext Model" }
+  },
+  "2": {
+    "inputs": {
+      "clip_name1": "clip_l.safetensors",
+      "clip_name2": "t5xxl_fp8_e4m3fn_scaled.safetensors",
+      "type": "flux"
+    },
+    "class_type": "DualCLIPLoader",
+    "_meta": { "title": "Flux Text Encoders" }
+  },
+  "3": {
+    "inputs": { "vae_name": "ae.safetensors" },
+    "class_type": "VAELoader",
+    "_meta": { "title": "Flux VAE" }
+  },
+  "4": {
+    "inputs": { "image": "ref.png" },
+    "class_type": "LoadImage",
+    "_meta": { "title": "REF_IMAGE" }
+  },
+  "5": {
+    "inputs": { "image": ["4", 0] },
+    "class_type": "FluxKontextImageScale",
+    "_meta": { "title": "Kontext Scale (1MP optimal)" }
+  },
+  "6": {
+    "inputs": { "pixels": ["5", 0], "vae": ["3", 0] },
+    "class_type": "VAEEncode",
+    "_meta": { "title": "Encode Reference" }
+  },
+  "7": {
+    "inputs": {
+      "text": "Place this exact character in a sunny meadow, storybook illustration",
+      "clip": ["2", 0]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": { "title": "PROMPT" }
+  },
+  "8": {
+    "inputs": { "conditioning": ["7", 0], "latent": ["6", 0] },
+    "class_type": "ReferenceLatent",
+    "_meta": { "title": "Kontext Reference" }
+  },
+  "9": {
+    "inputs": { "guidance": 2.5, "conditioning": ["8", 0] },
+    "class_type": "FluxGuidance",
+    "_meta": { "title": "FluxGuidance" }
+  },
+  "10": {
+    "inputs": { "conditioning": ["7", 0] },
+    "class_type": "ConditioningZeroOut",
+    "_meta": { "title": "Zeroed Negative" }
+  },
+  "11": {
+    "inputs": {
+      "seed": 1,
+      "steps": 20,
+      "cfg": 1.0,
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "denoise": 1.0,
+      "model": ["1", 0],
+      "positive": ["9", 0],
+      "negative": ["10", 0],
+      "latent_image": ["6", 0]
+    },
+    "class_type": "KSampler",
+    "_meta": { "title": "SEED" }
+  },
+  "12": {
+    "inputs": { "samples": ["11", 0], "vae": ["3", 0] },
+    "class_type": "VAEDecode",
+    "_meta": { "title": "VAE Decode" }
+  },
+  "13": {
+    "inputs": { "filename_prefix": "pique_kontext_scene", "images": ["12", 0] },
+    "class_type": "SaveImage",
+    "_meta": { "title": "Save Image" }
+  }
+}

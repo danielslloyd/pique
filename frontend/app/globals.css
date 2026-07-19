@@ -1,0 +1,79 @@
+@import "tailwindcss";
+
+:root {
+  --cream: #fdf6ec;
+  --sky: #e8f4fd;
+  --accent: #ff8a5c;
+  --accent-deep: #e8632f;
+  --ink: #3d3a4b;
+  --leaf: #6cc24a;
+}
+
+html,
+body {
+  background: var(--cream);
+  color: var(--ink);
+  min-height: 100%;
+}
+
+.word {
+  display: inline-block;
+  padding: 0.05em 0.15em;
+  margin: 0.05em 0;
+  border-radius: 0.35em;
+  cursor: pointer;
+  transition: background-color 150ms ease, color 150ms ease, transform 150ms ease;
+}
+
+.word-pending {
+  color: var(--ink);
+}
+
+.word-current {
+  background: #fff3b0;
+  outline: 3px solid #f5c518;
+  transform: scale(1.06);
+}
+
+.word-read {
+  color: var(--leaf);
+  font-weight: 800;
+}
+
+.word-assisted {
+  color: #7aa5e8;
+  font-weight: 800;
+}
+
+@keyframes pop-in {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.pop-in {
+  animation: pop-in 250ms ease-out;
+}
+
+@keyframes word-pulse {
+  0%,
+  100% {
+    transform: scale(1.15);
+  }
+  50% {
+    transform: scale(1.35);
+  }
+}
+
+/* A word playing its help audio: enlarges and gently pulses. */
+.word-playing {
+  background: #cdeafd;
+  outline: 3px solid var(--accent);
+  color: var(--ink);
+  animation: word-pulse 700ms ease-in-out infinite;
+}

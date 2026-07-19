@@ -1,0 +1,21 @@
+# Pique TTS service — runs on the SYSTEM Python 3.11 (same interpreter as Henty),
+# which already has the full validated stack installed:
+#   torch 2.12.0+cu130, torchaudio 2.11.0+cu130, chatterbox-tts, kokoro,
+#   numpy 2.2.6 (<2.3 required by Chatterbox's numba), scipy, soundfile, fastapi.
+#
+# %LOCALAPPDATA%\Programs\Python\Python311\python.exe -m uvicorn app:app --port 8100
+#
+# This file documents the requirements for rebuilding that environment elsewhere:
+
+fastapi>=0.115
+uvicorn[standard]>=0.32
+python-multipart>=0.0.12
+
+# torch==2.12.0+cu130 torchaudio==2.11.0+cu130  (--index-url https://download.pytorch.org/whl/cu130)
+chatterbox-tts==0.1.7
+kokoro
+
+# CRITICAL: numpy must be <2.3 for numba compatibility (Chatterbox dependency)
+numpy==2.2.6
+scipy==1.16.3
+soundfile==0.13.1
